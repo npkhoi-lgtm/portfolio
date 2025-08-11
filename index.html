@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NGUYỄN PHÚC KHÔI - Professional Portfolio</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Google Fonts - Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #374151; /* Dark gray text */
+        }
+        /* Custom scroll-behavior for smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #1f2937; /* Darker gray for titles */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #4f46e5; /* Indigo accent */
+            border-radius: 9999px;
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 90%;
+            width: 600px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+<script async="" defer="" src="https://www.google.com/recaptcha/api.js"></script>
+
+<style>
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    background: white;
+    color: black;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.contact-form .row {
+    display: flex;
+    gap: 10px;
+}
+.contact-form .row input {
+    flex: 1;
+}
+.contact-form textarea {
+    min-height: 400px; /* enough for ~300 words */
+}
+.contact-form button {
+    color: white;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+}
+</style>
+
+</head>
+<body class="antialiased">
+<!-- Navbar -->
+<nav class="bg-indigo-700 p-4 shadow-lg fixed w-full z-50">
+<div class="container mx-auto flex justify-between items-center">
+<a class="text-white text-2xl font-bold rounded-md px-3 py-1 hover:bg-indigo-600 transition-colors" href="#hero">NGUYỄN PHÚC KHÔI</a>
+<div class="space-x-4 hidden md:flex">
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#about">About</a>
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#highlights">Highlights</a>
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#experience">Experience</a>
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#education">Education</a>
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#skills">Skills</a>
+<a class="text-white hover:text-indigo-200 transition-colors rounded-md px-3 py-1" href="#contact">Contact</a>
+</div>
+<!-- Mobile Menu Button (Hamburger) -->
+<button style="color:white; font-weight:bold; background:none; border:none;">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Mobile Menu -->
+<div class="hidden md:hidden bg-indigo-800 mt-2 rounded-md shadow-lg" id="mobile-menu">
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#about">About</a>
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#highlights">Highlights</a>
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#experience">Experience</a>
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#education">Education</a>
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#skills">Skills</a>
+<a class="block text-white px-4 py-2 hover:bg-indigo-700 transition-colors rounded-md" href="#contact">Contact</a>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-16 px-4 md:py-24 shadow-md" id="hero">
+<div class="container mx-auto text-center">
+<h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">NGUYỄN PHÚC KHÔI</h1>
+<p class="text-xl md:text-3xl font-light mb-8">Chief Operating Officer / Factory Director / Production Director / General Manager</p>
+<p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+                    Over 25 years of extensive experience in senior factory management roles, driving operational excellence, R&amp;D, and digital transformation across diverse industries.
+                </p>
+<div class="flex flex-wrap justify-center gap-4">
+<a class="bg-white text-indigo-700 px-6 py-3 rounded-full text-lg font-semibold hover:bg-indigo-100 transition-colors shadow-lg" href="#contact">Get in Touch</a>
+<a class="border-2 border-white text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-white hover:text-indigo-700 transition-colors shadow-lg" href="https://www.linkedin.com/in/nguyen-phuc-khoi-2b2a99132" target="_blank">View LinkedIn</a>
+</div>
+</div>
+</section>
+<!-- About Me Section -->
+<section class="py-16 px-4 md:py-20 bg-white shadow-md" id="about">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">About Me</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div>
+<p class="text-lg leading-relaxed mb-4">
+                            A seasoned professional with over 25 years of progressive experience in senior factory management roles, including Operations, Production, and R&amp;D. My expertise spans various industries such as Tissue &amp; Carton Paper, Jewelry, and Indoor/Outdoor Furniture manufacturing.
+                        </p>
+<p class="text-lg leading-relaxed mb-4">
+                            I specialize in technical operations, R&amp;D, supply chain management, production planning, factory facility operations, and project management. I am proficient in implementing Industry 4.0 concepts, digital transformation (ERP/MES/Automation), and setting up greenfield factories.
+                        </p>
+<p class="text-lg leading-relaxed">
+                            My strategic approach involves utilizing SWOT analysis to set SMART goals, developing OGSM, BSC, OPEX, and AOP budgets to align manufacturing and quality activities with business roadmaps, and ensuring clear KPI implementation for cost control and efficiency. I also have extensive experience with Quality Management Systems (QMS), CSR, BSCI, SMETA, and ESG audits.
+                        </p>
+</div>
+<div class="flex flex-col items-center justify-center md:justify-end">
+<!-- Image placeholder and upload button -->
+<img alt="Nguyen Phuc Khoi" class="rounded-full shadow-lg border-4 border-indigo-200 w-64 h-64 object-cover mb-4" id="profile-avatar" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAkACQAAD/4QBaRXhpZgAATU0AKgAAAAgABQMBAAUAAAABAAAASgMDAAEAAAABAAAAAFEQAAEAAAABAQAAAFERAAQAAAABAAAWJVESAAQAAAABAAAWJQAAAAAAAYagAACxj//bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIAaIBdAMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP2aY0F8KP1pNxprDdXPfU6hc4pytvWhE+XmnquMURjfUBYkxjNTbcVHjNTIuTVctncVwjSpAlKq4p4TirEOReKkVc0iripE+7QAtI5wKUnFV5LrZSAJZeao3F55rbV+70J9aJna7lyx2r2xUcrqBtUN60PYBs4EX3ajjiMp3GnKDj5uamiGaxWxdx0MeenrWlBF5SdfrVe2T8s1YzxW3Ql7kjN8tNQ5pU6UtMQ77q02gnkUZ5osAhbFIz5pp60qjNAB0FJSO22hW3CnEBTyKjIwakJxTCdxokAmeaa9Kw2vzQxwKQDKKDR0FIBrD8qD8vT86PvfSkbg0AMc807dRR5eBmnoAuR3pABItAHmU7PlJ0zQA1htqFlLNjtUvM1CrigBF6e9NJzTinFNIxTAKDTlHy03tSAbJnFRnninSvhaahZzntTAcDtHINFKZG9qKkCsq4NOPHSg/P8A1pwGKgsEFSZ5ojUkYqSOLbT2FuESbqnVdopETFSIuTVkgg4qSMYFKq4pw+agBKeTtFJnHNRSvzQA2abccCoGGOtOdtgqvMxduaTAJWJb2qExlDz1qQsEHNROWc/3foaxUr7lDXbfwvzfSrtja7D835Cq9tHhuK0LNNoqooCwq4Hy8CkbrQT6UAcZrUkVVwKdUeeacWxQA4nAqN3ps0vlAs3yqo3EkgAD1ya+f/jh/wAFOfgp8B7z7HqnjbT9T1JnMYsNFb+0LndnG0iMkA/U0h2e59BA0E5r86/i5/wcI+F/Bk01roPgPXL64VgIW1G5W080dj5YRnH0OK8d8S/8HFPxGW0aW1+HfhvQ1Y7YzqE0spkPGBtBQ/j39KB8p+uhem9DX4o69/wcefF+w1WNl0XwLBCHO+A2sjhxnpu8zcPrXpXwg/4Oc7W8v4bXxz4EhjhI2y3Gj3TAj3WOXg47jeKrR6XC3mfrMTuT3FNxmvA/gZ/wUw+D/wAdvDYvtN8VW9rIiiSW3vI2hmiU8hivIK4x8ylh6kV7doHjDTPFlj9p028hvrfON8TZAJAPPfoQaLElx1zTakJ+XPUH0oXa2KAI6KfKuDTKkAxijPNIRgU3cafQBQ4FRspNOC5+tOCUAMB2CnCU46D8TSSPk0AYoABnPb8KV34phelQ5FAC96Yz5pXPNRom9uaAHUGg0khFADGXcDSq5VfloZ9w4oC7UqdWMSigHNFUIb5G9Qy/NjvQsZ3URoUPBqSMnc1Qk0x30FVdtPjXJoRc4qZEqxAi81IikvTkTAp1NIBfumkLYFIxwKiZ8UgHbmqKR8jb709j61HKyp92k3bcCN+tV5ZfzpzycVDv4qdXsUkG/mnJ85prLsPP6VNDCzc9KztfUZNbx5P41eVdoqK2THJqUnNbRRLdwopC2K574nfFnw98F/BGoeJPE2qWek6NpcRluLm4k2Ig/wAT6Dk1TdhJXdkdDI/kjczKo96+T/21v+Cvnw5/ZON1oem3EPjDxvGhJ02yl3QWJxwbmVcheo+UZb129a/On/gpd/wXf8RfGTUL7wt8NZL7w/4RUmGW/jHlX2q9jsPWKM+vU1+cWra7qOtS3LXzzIszea8YJ2Enu7E/N9WP4Vk5dDS0Y6y3Psr9pv8A4Ku/FT9rnWbix1TxNNYaI2Vk0rR3+y2SrnpJhjvHuzMcfWvIdH8ZwWKmGxuEhjkG1pI5TDGc9S8gO7B64Ga8XfxnaWFvsWG3nxhuV/cnHTC9/wCVZ8/jC/8AEN6nkrqF3/CiQD7uOgHYYHYU43e5nKTep9DDxJZ6VHLKNVt7a7mzhrbMJbnjaMGQ8/xEjPHTvzevaxLNZySafZ3DzNkS3d0dvJ77nxjr/DkkVyGneEPG0Vh9ssfD7abZ7MPNK48wE9yzHP61heMtd1i3tGj1C5MkhPO5jJt9fm5H61Wl9AJtc8TQWkUcdxqCSTKCPLjJKr14zgf4VH8O/DV5HrcOs3V5JJaNvESOQAuCMkMAMenHJ5ri7cyTM9xH/Zs20c/vU3D8Cc/lW3H4ja6VYZraeaNgFHkTMCnHQD7v+NLltqidWz0PUfjjceGLloNNuoNPt40KqoYhmGOQOnWvcP2f/wDgqf8AFT4AWFrdaDe2MxhXzJUvS5WZQ+NihWGSBx1AA5r5FubOztp0aKG62qPmO2ORs+nDVX1rVZ3gdbeHU5oCfmCw7Ai/TOfxpormtsftD+yB/wAHEMfiG3uofiroFra/Y4gft2lPtyc4AKO2M/Q1+gf7M/7X/gn9rDwmNY8G6o1xbE4MVwvlTocZ5Qn05+lfysaXe350xmWzumgGAA0TMXOc4PUds1+hP/BJH/gq7H+z1LP4J8UaD9o0Pz45xfoghmtpu3PIIxgY4P1q4pP1Jc9bM/fCMsy806uV+EHxc0H42eAtP8ReHNQg1LS9SQtFPC+5SQcMh7qyngqeRXVCoemhQhXNIExTqKAG530m408nFR0wEaPjIpEPNOQbDSg+YKAGnnigccUuCOtNaUKKYBIuRTFQKaVmY/dXJoG5eGqQHJxzUcg3Sj6VIVwOi03HFMAVcLTXTeKc7cVGTmgBCdnFFKTmikA6NcCpliyKbGd1TRpQARpUyLgU3G1aM5WmBJnimGTJxTA+BTs7hTuAmeaAAlH3RUE0vzVICzTbvrVeaQ0jz7ajJyaiXmUgxnrUdOOWqSIeWu7vS1QCwwhDub5mHarcEDSEN09jUFpE00uOg71orny8dhxVJCuA+VcUE4FBqvqF5HZ2kk0sixxxKWZ2OFUDqTWmyuLc574wfFfQ/gf8OtW8UeIbpLPStFtXu7iRjwEQZ/M9AO5IFfz2f8FJP+Cq/iT9un4htGzS6P4N0+UjS9GifcFxkCWU9HmPB9F7DvXp/wDwWr/4Ke337Wvi6XwF4LvZ7XwBotyyyzRyndrc6EgynH/LMHhB9T3GPgCPT20uy3wSeX/AHB5+g9/0Fc7nfY2l7mnUuar48k8NyLJYsy37LuLEBnj/ADz19TXK6jqV74ndpb66VSzE+VCiru92PA/Kq+rxyQl/JVTIw+d89PzrnJUFtLummnLLzhflX8+prSMV1MJXZutB5cu6Ty41XkM7bsD6Diuq0L4v/wBgCOOLzJI4xhRFL5CgkYz8oBPfrmvO3vmkRmjeJv8AeDf4Y/Wm2l1NcBt8ZZj0Zflx+lV6BHQ9dh+KtrJEsUdjDNLIuHMlx5Zb6nPQ+hzVTXfEe/TWaD7LbM4Jkjiv4sfgAc8+leUi7vLSbyyshXtu7Vr2fiuOxgbz7e1YtgYWLDfiaOW+ocx09nLdXW4HT7e6DEbWllDhPTB659q2NS1eC101reKGxsW35dhy0nb7wznFcfF4ukvIinmwQxtzsP8AL1NOi8QW+nAxrGrSNzgDcq+/NTJvYex0VneWsUjGS+MzMNwWC1Zint8+1f1on1aKNCIo44WIyzzyeY/4KuFB/l71yN54gWeY/u5Cw7JJj+lV4vEjQXMUccIXa3yrKm7cc5OTmjl1uB2Fl4086dlW+aFlUxlom2BwR90qOOw5zmu68GeLYrh7eC107yVjVbeWRohIsoLZK5J5zk8npxzxXnFtr8cWmSahJaaa0kAZYfNj25lIwMIuM89Mn36Cu58L+IUsCsEyLDbWNsbqRI2K7l65I7nnrS5bO5nJa6n2Z+xT+3J4p/Yz+PCeH9N1ySHw/rjrcPpdwDNbXLY4bbnKOQCu9ecgEg4r9zPhB8U7H4wfD7TdesT+51CBJtuc7dwB7cf/AKq/ljsPHl/qd5D4zZIzNYXqXaBAVFrECD2OcDg9RyD/AHq/dD/gmB+2p4c+Kvge1k0GWHTf7PVbfWvDzyb2si5UJd256tbsxIYfwsR0yc78ynG/UqN0fegORRQGDKGXlWAIPrTck1mUDfMcUhXaKNhpWGFoAYXApA7Mfu7R71JvptMAjLTD5+TTZbYA5Bp1FIBu+kPzDNK4y1Jj5aAEoUZNKTk0ZxQAkzbRmmKN/NPPzUZ2iqsA3y8UUF6KWgFqniPjNMFLuwtP1Adux1pS2VqNDuNWI1wu6pAiEODup/m7EolkyKrSvmgB80uBVRmzUvBqF+TxUylfQoa4pu1guTUkrHFRMc9elZ200BCg4oQb5AvrSEb2+Wr2nx7Bu/iYVUY3eoEtpbiAdfqanJyPekPNO3belaEkbnC18Hf8Fzf2yh8CfgCvgjS9RSz1zxxHJE5STbLBZrxK4Pbd9weuWI+7X3bcuywswA6V+AH/AAcB/Fyfxl+1rq2mxDz5tNRLC32Elo4kHzA9gN5kP1Ymom9DSno+bsfDWr+LINd8QyRxulvY2o2hif8AWdOSR2GMACsHUPEcZSZvM/c/wjPpWTr9ymmaalnGV+95kjgcux/oP8a59pzdlcN8q9yOgpQir3ZjUm2zaF/JdzNgLtUbsnn9Kp3Fs80fmFvk9+Kpyai0ce1VKxg9O7n1NT6Fpd94gnxHHNIoPyhRwaqVSMdWaU6cpaRWpCD5QZpG+VT8oIP8qRLlpT8rMufbmvSvDH7N3iDxOVc6fcRwnphME/TPNd/o/wCwNrU5WSRZog3zEOuf5Vx1Myw8PikelQyHF1VeEGeBWWnNcBW2vK3bIwBWpZ+CrzW5Dth3bRyQMAfjX0vpf7AGqeeDNqDwov8ADHEMj867Gx/YUafH2q61eTtsWRFQ46cKorz559h19r8D1qPCuLavKNvVo+P5vhvNaOyhlLAZYA7tvtnpTIfBMzRkeYo3ccV9x2n7FGmwRrGv2zodyMBtH6VVn/Y9gWV2Em1Y+MRxZYmueXEFHozsjwjiGtvxPik+Dbi0PmLEjxx8fe5Y1paP4Ug1YsxdoWReQTnH06V9hWn7LFtbQyM8TSSKBjzRgH8KnT9l6PUhu+w26zxpuWSNPLcegJx835URz6lJ2X3hPhWso9PQ+OptFW08nzI18q2YSgc7pO/J/rTtV8Wtr0d1Z2f7q6vkEcj4wCobOwDP3SQM/hX1h43/AGZr4aBIP7MhlYDiWMJu/oa+SPiB4Z/4QnxHJbqsltcQyHjoQR/nNeng8whWfLFnzuZZRUwqTn18jT+H/jWzuLiS3ysunNbeXJG2QrEfKyn6gkfXFewfsm/F2/8A2avigupWV1JayWAHl/MT59s3JU9iCuAQeDgg18zaddf2V42eZU8i31TNwiqcgE5WRf8Avrdx24r0b+35Lm0tUmbzJLAFEZRktGe2fbqK9FS5ZXR48U76n9Rf7HXxls/jr+zz4c1+zZmimtljyxyTtAA/SvUK/OT/AIN2P2hW+Iv7NmoeCb6Z/wC0vBdx5cO4hWms2JaFj6kfMufRVr9HliyK0ktdDQi6cmhvmFOIxUbDBpAFHagHFLnceaQATSUGgHIoAa3NNT/aozxTkFTuythW+7TAcGpAMU1zVkiE5HvSMu4YpwSmvypWkA0R0U4ylfyooAnJ5/nSqN3+7SLz9KkVdq9qYDo2jiXjrTXm46rSM+z05qCVd/TmkBJK3y9uagI20112r83H0pmMLuoegD3bmow3PNNLMWp7HcKxdkUIxpH5NITihIzMf9nPJqtGDZJbQb2DelaMA2Uy3gVUFWHGK0JGs1NZw33elEq5FN6UwGzBfJZmztxyPWv5sf8AgqX8QYE/bK+JiA2rMuq3UIBO5Y9rtu2k9y2Rxxmv6UDHiFhznBxzX8p/7Zd/eeLv2kviHeToWZdeugzAcFvtEhCg+wIz+FZVN0UvhZ88+KHkn2yNt3MSSAegrN0u4Vp/3hYRjqPWug8UaRNJcu6qzKoIfjgGqPh7wpLrGp29usW5ZZlTC8lm9KrmXKZx1nY9C+CvwTuvi5qMMMKN5LP87YztX/69fdHwe/YysPDEcCpZw7lUAMy9D71b/Yb/AGeofD+gW881rtlcBiW+lfXumeBIhbReXH5agc98mvz/ADXMpVans4PRH6xkeVU8PRjOcfeZ5Z4Y+BljZf64RqF4+WPPP1rpoPhtaxhVVSwB/iXBru4dDeKcqOWHGK0NP8NqZyH4buM8V8/WxEtkfVUYdTgofAtpuwsKr2J61di8FWsTJ5dujEAFnPf8K9Dk8GweTlVKkjt61EPDccMi/LIWUcc5rOnJ7SNOZNHA3/w+t7or5MJHHznGM59KzW+HENvE3lx8jnFeonRSwb5mXjpVY+HvOm2/N0596VW61RSkeVQ+AbWdwtxGu5ccdCPxNX18EWdv5nkx7eByMHIrrtW8JBZfmk3KOQuKzzpkkMmNu5epwMYrSlUTMa1O+rPOvHfhhVsD5MPmR+w4Q1+fH/BQX4bDQ71dShjZHlyWZBkBx/jX6rS6StxpkkbKPKZSOeor4o/bf+Gw1/4Z+Ivl3GzBeLjqVNetleIdLFRfR2R4WcYVV8DOD3Wq+R+b5vv7R0uObcFmt2E0a/kJF/QH8K6vQdVFzAJAxjk2gowP3iO36V5w922mXkg5wGyB6Vu+H9bEFqyL91W+U+g7V+lcvu3PxiL11P1W/wCDe74yt4X/AGwbbSbaVhZeLtOlsnQkNgohmjP1yrLX7sRzYUcMvbk1/Kx+w58dZPgn+0Z8P/FSyTW8eiaxE1x5Py7oS435H+6WPv0r+qPR7sajptvMTxNGrg+oIyK1V3FGrViakcZFPZNq5ppqREdBOKXGTSGPNABkHpTSjN7U9F2HmkJxQA3bhaRVzT6OlAABimn79Ooo63GDHApgPzU8jIqM8UCBjk0UUVVgLmMD6U1pMGmlsHk9aZJgjO7GKkAkb5qY7YHB/CmPJkcc5pgTYN3rRzaaDAlpBz+VB27Nu400vzxTccnNZylcdrCAYpd6njPPpUW9t1PjTc3SpdmAKjM2KuWtsQmMe9Ntrf5vwq9DGBWkdQJEUKlNMnzUjyc4pjfMaokHfijduNAAPWmqOarUBzo00bRg43DGa/l1/wCCg+rWt7+2r8UrPRLfytP/AOEovxCgXALmdhn8Ov5V/UUE39enSv5nf+Cmvw0k+FX7evxa0+4XEr69c6hCGzllnPmIR7APjPfFc9bdNmtOzTR4FJo9vfXjaSv7xTtQyZwqsSBz+HP/AOqvRfgj8PdNttf068jt/MXzTBYx7f4c4aV/9pjnHtnpgV5rocI07Sru6nb/AEi8cxRNu/1YPDOR3wu//voV7B+yjA/jz4u6Xb2qlrazkDEjoka9Rj1PH5Vy4qpy0JSfY7cupc+JjBdWj9HPhH4bj0/wpZxxou7YOB2PSvW9AsPLsBHz90Y964jwikOhaHGzsscca5Zj2FcX4p/bP0rQvED6bEAskfyAE/vG98Dmvzehhp15+6frWIxVOhBKR7tHo6s/bJ64602CzRLz2U85rx3SP20fCkNmqXl35EynDCT5Tmui8LftFeH/ABiyi11Kzb5sY8wbvyrTEZXVhrY0weZ0p6XPWoTG/wDdIB6Y7VVuYl3tIq/X6Vg2fiWGeBWhuY35PQ5xU1xqPlhSjfeGSM9a5JRa+I9CEE3dE32ndJ+8XCZ/OrSwQwofL49utYtzqDbcsV29fpTY/EEdtGS0gUdSSetRyuXuo1krK5ensVkf5vQ81TvNG+QsoU54Fc7rvx78N6OrLdalax4OMmQLn86529/ac8OwMvl6lE24jYrEDP09c+1aQy2tLVI4q2OoxXvM7HVdNlW02xnD9/Svnb9qPwqP+ER16N0JWe3YnA9q9y8EfGGx8cTfZ9v72TOxlIwcdq5n44+Gv7X0i6VRu8yJ0wOexqZU50KiczGFWNeEox6o/C7x7oIg8RXyRrt8tzgDp1rGsXNjdtHk7WAKV6b8YfD/APwj3xQ1K3lhMJiuXjkQj7o3dq5zUPh3JPaR3luG/ctiQE9QS2D/AOOkV+uUanNTUn1Pw6vTcKji90zrvhpHGhtpLgPGksgzJjhMkD/P0r+sz4B/8kO8Gp5rXHl6JZr5zfekxCg3H3Nfyi/DSb+0ZotNVV3NHtO7g78jB98HtX9W/wAB9q/BPwiY38wNo9o5bG0MTChzjt9K0jrH5jex17AsKjIK07zPl96UjcKZJCx54pnmnHWpmiCmoZF2mkA4Ek801jjsKQPinxrvHNP0AFzih24pWNJuXFJ6gN38UqnIpGXFCHC0dAAvg00nNFGeKB2EL7fSilYZooESO+R7VDMfNHHanSPktUZ+UVMm3sUAXaKawZj7U9XDLSOdq1nHTRgRudh+nammTc1BO9qcEwKJWD1Ejj5qYR7z6fSkRM4q1bxbj07U4rUPUktYsDmrH3BTY12ikkbJrUka3JpKYWzQHwaYDmbApEGKQHmnq1ADwNor8MP+Dln4UQ+A/wBsTQ/FMMDww+ONAj86fna89s7RsPr5Zi4+lfuY8mD/AEr8k/8Ag6O029ufCvwt1NbWNtO0q6vI5Z2cAiWZY9qY6n5YifQVnU2Kifjzr97DDoqxhlba3XONrEnP54r7N/4JVfBqWe1uNcmj3RzfKjkdADk/rXwpblvEvim3sI1Z5L64SNB2yxFftF+zN8JI/hD8JtM0+NFSSO2XzMDvjmvmuIqzjRVJfa/JH1nCVFTxEq0vs7erK/xd1hrfQPsEMjwtPlGdT9xfb3PSvI3/AGeo/FlvIYbdopJXyWL7Wc+p4P5mvZtT8PLq/iGa6uJt6QdB2U1k+PP2g/DvwXtPtF5JFc3CqXWBSAcDqTngD3OBXzeHrezko09z7jEYP215VNkeQR/sW6paXO77ZJIp5KTgSKw6Y6VFov7L83gzU45LUtHtk3YRj+7Gc4X0Hsa5X4pf8FbddtIbibRfCtv9mhaMK00yx+aHztMYchpBweVXA9eRVfwV/wAFCdY8SRQ3uu6LBa2dwqETxSK6KXyQpZGZQ3HKttYeld1aWYcnNy6fL/M83D/2X7T2fP73zt+R9JeBby58OSlZppmXG3DHtXoVl4pa/hRVzlT19K8F0j412usJDN94zY8seoPSvoL4QeGIdf0tZppPmccDOBzXgVq0pu0j66lSVNXi7lHVvEzWw+ZidvBAPIrzvx9r934hEiW88yrt2hVOBXqnxc8O2+g6Y2yP94o6g189a78X7PQLW4ZtqyW+4sp4246k1FGo4y9zVlVqanC8tEcZrPwT1LxTqZLLJNgnHmudv1/rTvD37LOsaVfrL9q+yx8s8uA8jj+6Aen1rlfEP7e2vabEb3Q9AsbjT0SaRLy/uFt4ZhEpdwrMQC2BwoyzHAAJOK0vhh/wVSk1S3t/+Em8Ixi3Z3Bn0+6SUxbQpJaPllXDDDHAPOM4OPpqccd7Lm5NPI+PrLLXWcHU975/nY9U0fwpJ4IAn86+2x5LMwyQfwHyn6V6f4f8Y/8ACV6WkTOk8jJguv8AEOx/KsTw38Z/CPxx0dZNImikk2hmgkAWRM9CV7j3HHvU1j4YGi6jby2u5U3lSg6DNeLi5+1upKzPUoUHRtKGx+cv/BTH4RN4U+Kcms2sLLDqI3uQvy7h1rx/wPrNumhyNcFm+UqyAZ3Zwyn8CP1Nfpp+2h+znH8V/hZcSLCsk8I3rkcjHWvy303T5NF8YnTJcx+XcmB1fjHUc+navsOHcd9Yw3sn8UdD4HizL/YYr20fhnr8+pb+Hf8ApXxW0hI2ZPtVx9nTH8LnhD+eK/q4/ZTnupf2bfBH21St2uj26TKVwUdUAKkexGPwr+ZT9gz4On4y/tqfDvw8I1ltdQ8RWkM4OflUOrFsj/dIzX9Umm6ZDo9klvboI4Y8hV9K+jjGyPlU3axYBzRmjOBRTAO9NfpR5i+tNMm6gBPL3UBtgA9qkA2ionXJpgOqM05W5pzR56UgCmHp1p5OBUZGKFsV1DNFOKcU2iISF25opM4op8rJI44SB9786Uoy/exSSTMoG39RUbsZDz+VZcxURzv5XTFRtJvNBzkelKVqfUEKBinoMgU1Rk1LGnNFrjJIY+auQrsFQ26c57fSpWfAraKtuS2PZ8VE0mTTHkqHzf8AOaBEu7PSlA5ojXcKOlAD3VQP/rU1WxTwOPWo2496pgOTkV+bP/Bzv4Vj1z9jbwzdJMq3OneIFMduB805eCQEj12gE496/ScHivzQ/wCDkiGbxF8I/CGmWkzxy2UsuoyKuf33/LNF9OMsfw9q58RWjShzT7pfezswOEqYir7OkruzfySbZ+Kf7Mfg/wDtj9obwnDNHuabVbZdv/bQV+2mvFNN05dv8MYBFfkn+xT4baT9rTwD50e3/ibQ8MPvYOf6V+vWt6X9pn2n7vfNfI8TTvKHofZcI0uWM790fPvxU+JGoaWJ7PQbGa61C4yFB+WND6k5ryWL9hqT4wTNfeNPFM0lzcASSWccnlQlgcjcf4gOw4Ar68vPhxHK/ECqmBlwvzMf896zdU+FNuAdyuI+chR8x/4F1r5+OMVL4d+59t9X9r8e3b/M+bfid+xzoWs2dj/aGqWclxp8QghlCIX8kfwHsQO3GR61V8O/Abw/D4GuPCtrb3Fxpc0xnljRh+8k/vM2MnGBjnAxX0GfhFpZlGyxaRj1MhLfpXQ6H4NtNNZVhtVVumQoXFV/a1WyjOTsEcrw0X7SEFfvZHgPwl/Zwk8AmKGZpLizt3d7b7Qdzxh8EID/AHV5x6Zr6g+Foj8O20K7flXB2r7e1V5dCj81fl8zacA46mus8K+FZLcrJKqq03Iyegry6lSdWpzI9bDwhCHKzP8AiwieJLOTaP8AWd9uDXx/8Uf2fG8UaxqFrdR3AsdRZBcGH5GkVeSpPXDcA4619rePvDhto9+G5AONv8q4WbQY9QlVpF2vnGcdPelRqSoVbseKoxqUrI+UNe+DfhXXPAUHg+6jvE0uzkVoIZJRvt2X+4zKSO/HQ5pfBf7Jeg6LZ38Wm3FvF/aKeS8k0SGRI+6KQAAD9M19FeJfANreykXNnFN83+s2ff8ArVHT/hro63O2S0eIdRtkOGr1XmlVrljJ2PJeV4Z2k4K582r+wZffC4W954Q8TXUXkOX8h33LGT12P1UHupyp9K9Z+EHxPvnvI9F8SW8lrfQsP3jxFVkPqOxz6g17Dpnw/tUtlFnBPtbjlyy1et/hFDcMrtHGzL9zeM7PoaxeJU/j37kexVNWp7dv+AQ3WlRalpUsLKrxypgY5DA1+Pf7dPw+b4cftT62sMYjjkmjukC+jDr+Yr9oZ9E/sseWhztXB56V+YH/AAVX8Nbv2n7WaNdy3WmIXIHUqzV63DNTkxrj3TPmeKoe0wXN1TX+RH/wSVim8M/t+/DXXLOGSVrbVN9xCoGDARtkIzxwju30TjnFf0sONrke9fzu/wDBHbw+ulftieHb+/3Na2swQ7lzE+4AbTnvj+Vf0QKuxQu7dt4ye9ffU8RGo3CO8d/mfnuIwdSlCFSS0mnb5OzDFNaTFOqBzzWhyjwAaYRtNCtinjkUwHB8UFMd6ajbqc4zQBGy5pu41JimuOaQCht1Iy5puachpgONMxk0rnBpuaYBRQTRSuwIMEikNALNxtoKkE5rn1KEVt1KBk0IctUypk0/IBIkwanij3H/AOtSwphamjHArblQrj4k2iopXxUrnAqGQZNUIh83NCj5aFXJ9fwqSOPP+FICSIYNNzmlBKmm/eHpQAu45pVXdSZzUqDmhAKg4r89f+CwqQ+IPiXoun3Sk28VioPH3txfP8yK/Qw8ivlf/gqP8CV8ffCy38T2qf6foJ8uRh3iJypP0bj/AIHXhcSUZzwTdPeLT+4+w4FxlHD5xTeI+GV4+jkrL/L5n5f+D/2VY/A/7RPgXW7Fj9hj1KGRgUywbLYGewAOMdzj0r7VvTtm5PfGTXl2nQm6+K3h2xWI/Z1h+2M2OPkjJB/76xXpVzNvjb1ZePaviMRip1qEXPpdH3dTA0sLi37HRSs/vubljaLqFsYvv7lx16/jRc6OtvIsUnK9BxR4NK/JlTgDqO9b2rpHIF5U9zkdBXl8rlG56sJJaHJ6lpSmLjCnGcjtWPf3lvo22aRl+XjOcZFXvF3iaHSLOWTzFKrkV5WNVuPGeoPeSCRdPs24LfxY68UQi5PlR1RjZXlsemeGbmXV7z7QsLR2/DDI6ivQUuVk09LortjBwM+vpXzZ8b/24NH+A/hWKSaz1G/GAsdtp1qbiVz9B/M1g/AX9uKx+O2kvdWtn4i0xYXw1vqNhJasp55G75W/A16Kp3hzRTt3M5NRqKEmk7bdbH11Pq3/AAlBihkVZfLXaMALXC+JdGmsNQ821t2aGNsuBzjHPSvIviB+0pD4G0Ga/wDJ1C6WMFilpA9xM4/2UUEmuO/Z5/4Ka2PxN19tJvdD8VaDcZPkyatpxhSdRxwwJ7djis/YSlB1Gm7dSpShGapxkrvZHu1tqdrq97JgKu44MZ52n3roNI8LWcke5Qrb/bpXmXjTV5bu4bVtNUhVO5/LH3x34rqfhz8R7XXbWPzNgl6Lk4JrhceWVxSotqy6He2WhfZl8tGDRn0P9Kl1ER2ULIV2ZXuKuaHcLcyL/e6DIpnjFIXeRfMTd0XnpVct4cxySi07HGzz+bdYP8QxX56f8FMfBzXXxXgvGT95a2SgOAc7S7E+3HBr9Aof3uooZP4SRg14X+3H8LbPW5/DWrSR+Yovfs7Iw+ViVJXI79COfWvTyjEKhU9rLZXPDzTBvFf7NHTmsed/so/DKX4S6voEjf66d4bsPjbvDIuMHvj1r9vtAuzfaFYzNndNbRuc+pUE1+c/7PHwhj+JHxn8J6fMoWFbNJH2j5VRM7v/AB0ce9fpFHGsEaoi7UQBVA7AcAV9Vw37SpKtiZ7Sat8v+HPA44lQpUsLgqe9OLv83/wGOppjyf8A61OozX1J+fEMke005eRUhpqDHNMBvl7DTw2RSsNwqPOKeoCtx3pCMigtgUgbNSAzPFAp23bTR0oAczZ7U0cmik3qDgmmArcUUqgN3opAVt+3p3pyysM85qNRn2qSNMCseVFDlHmn5h07gVPHCMZB/Omxx571Kq7Ritkibjk5qT7q01V2gU4jNADCWc98etIy7TjrTydg/pTOtAB1bNAOKGG00gbJoAUHIppbJoc4NCDFMB8SYFTKu2mIlSU4gFcr8b/DH/CYfB3xNpu3ebrT5QoxnLBdy/qBXUOcLWL4+8Xw+B/Cd5qVxG1xHbpjylODKWO0Lntkkc1jiuR0ZKe1nf7jowjmq8HS+K6t630Pzq8L2MaSySPH/pGnweQshHO0kfzAq9OjahbRhW2+W+T78Vo6xZC0v9SlW2W1W6k8xYw2di5OF/DOPwrOsZQgII6n19q/J5JezUT9orSvXcmtdPyL1tr32ErEMxjGBjsafqvihnsm2TMMDv0rn7+8kyMbc57+lZWpa7JbpsyoVzzk4rjjJ3sehR2Mbxj9q8T3i28cj+WzYOPlUD1rvtC8GWVp4W+xnaYvL2HH8Q71w91rC2PyK6r5g5ZeoHpWvo/ia4vAsIkxHjaSBkD6mvQw9F2uY4nHWlyrocvr/wAJNHs9XkuLcusifMqs+VA6cCmyeH11ONY3Rl8scsvau9nTTNG0vztSvLS3j2Eje+Wb6DrXP2Hifw/qNy0NjqkMLZ2qJYyFf8a6ZuMUohTnXq+8Yul+EY9IHmIzNtP3iO3pWmfhfp/jO7jW8VlVQWTbwwx71eOpaL4fkkXVNYtZGU8RQHcM+5FdHos+l+I9OP8AZepWc23nYrAN+GaiLXw9BVpV6fvGl4d8H6f4f8N/Y413K2QSfevN9V8MN4G8RE2+Wt2JMZ28j2rsLrUpNObDZ3FQPwrIv9XbVpGtZGVmOTHnse1c+Iw91cnC5hafvddzovB3j2Y2ytu27RgqTWjfeIftzqM7mPcdyfWvPbG4khkIZW3DritzRrhmZD8x/pXnyk/hWx6FW26Ny1k8hWLLtfGVJrL8b+HbHxp4ft/7RjMi2dyt1GoP8ahgM/gTWl563IG1WwBjOKr6sC9tHCG8tZJQN358V0U5OMGjx+XmxEWu56z+wVpMmt/FV9UMbKtrZSY+XhFwEUfiW/SvsPNfMv7Guk3Gn+N5Bp7M1ituTfMv3P8AYUn+9nkD0zX01j5s1+hcMr/YU+7Z+e8aP/hSa7JfIKMUU1mr6A+SB2zTT0o605myKAANk018Z7U7b702VcCmANFnvTSmF/8ArUK5FKJM0gGqeaQnNOYCmkYpoAoKhh059aM0bqsBqpjv3op1FTygQotSLFvC/N+FNCcip4o8iojEpixRbakXg0RpzTygBpki5p3ylaaoyKQnaKYCMAabQTz1oUE+9IALE/epo5+tB4HzflTZUDipctbDsOA3dakQZNMQHHQ1Kg46VYh6D5c0uKAMClLZpAI5+WszxL4ftPFei3Wm30fnWl5GY5Fzjg9wexHUH1FaLH5aikbFEopqz2KjJxfNHc+PPj1+yvdfCS3ufECeIm1LS5mW1is5bbbLASSwZpA2GxjH3RnNeVae0clm3qDzn1r7P/ao0Vtd+Auvqi7pLSNbtRjP+rYE/wDjua+GdL1lZVk27cg9K/P88wFOhVUaSsmj9IyLMq2LoueIleSdr/JW2I9Vfy3bPYkCs2OwWa42y7XDAhgRWtqLLLAdpRjnIU9zWXcXnkncq/P0PtXzDhfRH1lOs0cL4t1RdP1CZWbb5BPyt0Arxf4i/tx3HgbV10PSdG1y5luCQbm3szIi475/wzXtnjbQ4/FGs/KCCww4z/Or0XwisW8PfZntoWkT54nCDKN9a9PDVoQVpq5lUoNz5k/1PANN8ca14pmjuF03WtUkusHdJEU8r14bGK19Rt/FljatLa+H9Su5F/ghZFP5swr1vTNJufC2pJJcQhEjPJ25UjPtXU3fjuNZl8uGGQMAAVQ4zXTUnTauj28LyuPW/qeD6X4e8aa1ZiZfC+pF2+Y+Yy/KfTOSKLvwX4z03M0OntYzLySlyA4/l+le7xfF3UIo5IYZo1VTjZ6fh60yaXVPFqr500ckfAKiMLn6nrURqQKxTSV/1Pnj/hp7x/4J1OPSrzwzrWuQtwJ4QjCMD1+bJr1/wb4sk8UwQXs0MlvImC8TcN+Nd54b+Glnp6h5G3TMcnjgH/Cm6l4dtdKl/dxr8xwx9feuetiqb0gjw5UeeVy1o+lNdQtLKPLXG5PxrY0nTNkYKhsdRgcVBYalGbJVYeWvAAzV3SdTWG23MxVfQV5vK76nRWqdEXSyybs/wjBGPu16D+zh8AtB/aHl1KPXlvvsemeXLC1rctA6yknuOo2hhg+teU3mpFjI6tx/jX1t+wt4S/sL4Pyag6fvtXumfd3KJ8o/XdX0uQYOFauudXSTeux8jxBjZ4fDuVKTjK6s1o18z1LwR4F0n4ceH4tK0WzjsrOLnAJZpG/vMx5Zj6k1sCk6igHP+FfoUYRjFRirI/NalSU5Oc3dvdvcXOKTYKQ/TNBbB60yQTrTaeDtXn+VNb2oAQU5myKNnNNYYoAaw2nik6n0oJNJVWuAdDQKM5NDjAqQEkBxSeUSv3qEfJ+b1p2VP8QFADcMP/1UU/d70UAEcXtUyLtFLRQADrT+1Ii0rHFAAW2CmNIWoPznH505Y/LHPI9fSnsBHs7tQ03ljC/e70k9z5hwG71GPmNTKVgHk5oHXpRmpAhP+NRGPUpskTlaeq4pI1xTxWpIEUjc9KCaM00gIwCOtROeKllfioSNxpAU9U0mHXNKurG4Xdb3kTwyD1VgQf0NfmN8TNDu/hX8RNU0e5V/O025eF8dGUH5W/FcH8a/RX4/fHzwn+y/8KNV8beNdVh0fw/o8e+WV+XlY/dijTq8jnhVHJPtkj8VR/wVZk/bv/bJ1y1fw2uiWeqRlNAhtkMs7RQIzH7QV+9IUBYsBhQNvQZrwOIMDOvR9pTWsfyPpuGsdGjX9lVdoz0+fT+vQ+i7Hxct0FVcewqtfaiDOx7eveuIg1DyNrLISvTg9K1rPUvNg+Zssehr87lFp8yP0pe7ob+iW63N8shU/Mc8967C0snniwynOOCBXK+E763kuIl3HceAegFd7oVupdcSb8t0A6VcotxuioVlexzniHQpsHEaybhjDCuNu/hfcTyFtzQjrgNivfhodvMuZFDYHXPSquq+GNPDQ5GN+Tz3rSjJo6vceljwa0+FUglDCZ1IPUnrXpPhnw81jaqpyVUY6V1SW1haXQXbEzDgjsv4VsLa2c8LeWqqyjnHGaVSUmKUobWOUFmYVwFyprE8VWmYWUYVmGAf7vvXXXNutqWaTCqe1cf4uv4/LbayqMHnrmuWELu7Mp11DRGHHrX2K2EE37x1A+YdPrU39vtHCq71UZyPauU1fXN12uGVhjGR61UbXtrBd27jpWkY3lcxlU0ueiaJHN4l1S00+1Uy3V9MkMaj+JmYAfzr9IvA3hSHwJ4N0vR4B+7063SDP94gfMfxOT+NfD//AATjstB8ZfH2aC+1Ww/tzQtO/tO10p5P9IlQv5fnhO6oc8joStfe2a/QuHcL7Oh7V/a29Efm3E+K566oL7O/q/8AJATimOSrU+j7wr6E+YGbjShM03NOVs0gEbNMK4ORUjtTW+b7tADRM1OQKTuP86TZikZcUwFf5hxTCcGnKSB/SgOD94flSu+gEfmZpVfdSMqqOKahwaq4Cv8AepCAe1OKbjmmnhqlvUYZYdKKM0Vn7w7FwUDrQu48L+NPVdg56960JFy2PlXP17U0RMTlmH0p2eKY82wU0A8R7VyccVBcz+YNq/d/nTJrjc/8VNHWlfWwDVj2GpFIApNm4UoSpklcqIqqWOasIrY9qZB+7brU6D5c1RIqrtHXNFU/E/ibTPBehXGqaxqFjpGm2ql5ru9uEt4IgO5dyAPzr4U/at/4OEvg38C5JtP8Grd/ErWI8rvs3FrpiN73DAl/+2aEH+9VJNgferIznikmYwxln+VAMljwo/GvwJ/aD/4OKPjt8UpZrbw5faL4DsJPlCaNab7kD/rvNvbPuoWvlrx3+0/8TPjNK0njDxx4n1xZDuZL7VZ7gf8AfJfaPoBWns31Dmij+mnxT8fvAfgZmGueOPB2jsn3he61bW5X6hnFeSfGr/gqp8B/g54B1TWl+I3hjxRcWCHytM0HUIr67u5P4UURkgZPVmICjk+lfzlafHptjP5zWtu8rdWaMMx/E5qXW/F7NbeXCvlqDwBxxR7HzJ9oux6l/wAFK/8Agoz42/bs8dm+8QXH2HRbF2Gk6JbSn7Lp0Z4/4HIR96Q8noMDAHbf8G6vgeHxZ/wUFuNUuI1k/wCEb8OXdzFkZ2vI0cIP/fLuPxr4t8U3rXFwzs2TX3B/wbg+Ko9I/bg1mydsSap4fljXjrtkRv6CtaUfea8n+RnzNyuz9Iv2uv2M1s7W78UeEbcrGxMt9pkKcDuZIh2906enpXzHBcNAmxmx2UHrX6uRWCS2hV1Vtw781+dH/BT/AOFd5+zD4rh8fWNm1x4F1uUQap5S/Not0xwspx/yxkzg/wB1sdm4+MzzI1f6xh/mv1R99kefO31bEv0f6P8AzOAtfEUllcqNxUqf1r0Lwp8R/IVdxJbHLZ4rwPw949tfEsKyRSK0bjKMGzkVrQeJLrTp91rJuUdVJwDXynL9iR9XJOLvE+j4/iTDdxeWzM02ONoqA+NZ7sM7yqoX7v8AsivAv+Fwf2bJmaCRNo5OMjH4VXu/2gLdlMcZkcseecUvY+8rG9PE+77257NB4yLX7fvVIYnaSTmt/TviHJaLtaYMrccV83v8YUYb/JkbjPyipI/jRNORthuOeny4rZ0bmMsXZnvesfEf7YfL875c5Y55FcH4t+IEl/PJCrDavAxXBQ+NrzVo2+ZYF787mxTBqcFjHukfcxPryaxlTUdSY80jbTUJrmfaN272r0b9nv4G6l8YvHUOm2+6OH/WXU5GVtou7fU9AO59q8Zh+IsS69p+jaXZzax4g1qdbfTrC2G6S5lbgD2UdSx4ABNfp1+zB8Ef+GffhPCmrS283iC8jFxqc8a/u0fGTGmedidOevJ716WU5XLFT5pL3Fv5+SPPzjNFg6Nov33su3m/0Pwv+In7RHiL9jX/AIK3+NPFHhrUbue48E+Kp7W1W4mLLNZo3lm1f/pm0eUI989RX9Dn7NH7R3hf9rL4M6P448I3kd1pmqxAyRbgZbCcAeZbyj+F0Jwc9Rgjgiv5av2hviGvxS/ah+IXieFsx674kv7xD2KPcOV/8dxXvv8AwT5/4KG+NP2EPiFHrPh2f7Zo98yprGiTsfsupxj1/uSKCdsg5HTkZB/SI017OMV0R+WyqOVRyk7tvc/pVBxS18sfCD/gs3+zz8VvC+n31z48s/Cd5dRhprDW4pLd7N+6NLt8o4PRg2D7dK+g/h18Y/CPxfsRc+E/FPh3xNCRndpeow3WB7hGJH41m01owOgePmhDtp8gwKZUgKSrGlQbabjmgkkVXUBznJpjKQPvZoUbRS5zSAYMik6GpGOetRtEWFJeQDXiUjK8UhXFDOUNBfc2KAHRkbfekkX8qaeaDJ8vtSkupSG4NFAYt6UUuVhoakY4+nShyD1qJ51Q/L81RO7O3Xj0rToSSSXKoCq8noagLbjzQ3XFOEbEVIDD16UNLzwqjHvXzT+1L/wVj+C/7Kd1c2Gp+Iv+Eg8QW2VfStEUXUqMP4ZJMiOM56gtuHpX53/tNf8ABwr8SviKbix8A6dpvgHTZMqlwAL3UWX18xxsQ/7qZHqaFGT2Kdlufs14h8Uaf4Q0t73WNQ07SbOMbmuL25S3iUe7OQK8E+KH/BWX9nz4SLMt98SNK1W4h4MGjRyag5PoGjUp+bV+AHxP+P8A4s+MGtSal4q8Ta14hvJDky397JOR9NxOPoMCuNu/EhCBVYcVp7DuZ+0SP2m+J3/Bx78PtCSRfCfgTxJrki58ubUrmKwiY9jtXzGx+VfIvxy/4OEfjj4+lnj8P3uheC7NidkelWKyTAdsyzb2z7gLX5/3viF5A3ztisybUmdvlbitY04ol1Gel/G79qP4gftBaibjxl4v8SeJpsllGo30k0cZP91Cdq/gBXm93EZj877UUZz6VXa/YH5S3TjNU764la3fc2fl7VpZGd2bFrPY2tuskMgmZhkNxx+FTWmotOflXC9Oa8xOpXWiXzTRsZIyfmX2rrPD3jm3u4MKNsn8SnrSA6iWTPXrWTrGqeSrLuLHsBVa917zE2q23d1J61mTXG0fLz6nvQBV1F2uj8xr63/4IJX39m/8FKPDEO7y1uLG8jOf4v3WR/KvkZ13GvpT/gj54jPhD/got8O7rjFxdPbHP+3GwrSivfTFLY/pKRMJWZ4/+Emk/GnwRqnhvX9Pt9S0bWLZrW7t5lysiMMEf56V0OlWIm2yN+A9a2oVwvy8YrOUNLNHXGTWx+BP7Xf7IPi7/gmf8Z20Od7jVPh/rUjTaDqTAkKucmBz2kQdv4hz64h0P4n2+r2CkSfMMcY5FfuF+0v+zb4Z/as+EGqeD/FNkl1Y30ZMcoUedaTAfJNG38LqeQfwPBIr8Mf2n/2S/FX7FfxQk8N+IDFNHNul028hcFb+ANtEm3qp7FT0OevWvjM6yxQl7WOzPvOH829rH2FR+8vxR0Q8ULcBdp+VePm7ilh1aOQ48iNf9oivMNP16e3G593TrV6LxM33maRd1fOSp2PqnZ9D0uLUlt9rKqr2OO9R3+q/vc5PHOO1cJH45WMYYyHOOi9aivfGkjRsqK2D045NCpu5nypHZTeJhHGzGQRr3PTFch4h+It5qOoQ6dodvcahql9IILdI0MjzyMcKqKOSTWPZadrHjrXrTStMtbq+1HUJVgtrSFC0kzscAKo6k1+sX/BMX/glxafsx2MHjXxxb21/4+u491tCQHj0NGH3VPQzH+Jh06DuT6uXZQ8RO7+HqeZmmb08JS/vPZGT/wAEwv8AgmpN+zTpa+PPHlvHdfEPVof3cb/vF0WFufLU9PMPG5h9BxnPoH/BUD49/wDDOn7EXxC8URyeXd2+lPZ2Rzj/AEi4/cx/kXz+FfTGs3ISI/3R6V+U/wDwcy/GhtC/Z48F+BYJNs3izWGvrlQf+WFqnGR6GSRP++a+3hh404qFNaH5xiMVKrJ1Kju2fjN4aRXY8k98+tdbYXBjiG3+KuRsI/srDy+vcetbmm3okIA/EeldR5p09nrMiJtLfL6diPQ1b0DXpfCmqR6hpN1eaTfRtuWaxuGgkjPqCpBH4Guf3hQGX8TU9pdZlHH4mq21A+0f2cv+C4Hx6+A8tvbT+Km8baRHgfY/Esf2tto7LOCJh/32R7V+gf7M3/Bwx8K/imIbHx9pepfD7VGIR7kZvtNLeu9QJEH1QgetfhpJL5WKsQXzQyYH480vZqTK9o0j+qb4dfFDw38YPDker+E9f0fxJpkoyLnTrtLiMexKk7T7HBrexzX8tPwx+Mvib4QeII9W8L+INa8O6lGci4028ktpD9SpGR7HIr7a/Z2/4OCPjB8NGt7Pxcmj/EDTY8Bmvovst9gek0QAJ93RjWcsPJfCVGonuft1ndTgMV8W/AH/AILr/BH4yLDb67c6n4B1SQhSmqRedZ7j6TxZAHu6rX154N8b6L8RNAj1Tw9rGl67ps3KXWn3SXMLf8CQkfhWMoyW6NPQ1GHNBekzke9IRikuwC/epkvWnAZNNlJNZ3d7FaWGA4NLQvHWhiN1USFFDNiimBaKhRTWbApGbFMZqQFLxN4ks/CPhzUdW1KZbfT9JtpLy6lPSKKNS7t+CgmvwA/bW/4K2fFL9pD4tapf6R4o13wr4XjaW30rS9NvZLVIrc5UGTYQXkZeWLZ64GAK/Tz/AILp/tT2v7PH7D+qaJHcBNe+Ib/2NaRq2HFvw1zJ/uhMJn1lFfz+3WptcMW9TzzW1KN3qEnZJdyePxZca0u6Z2aRSVkPcnvmmf2h8/P6msOyvvs95dR99+4H6inPd/xE81tpsjnNG41Xe23kY54qpPqLSgY7d6z5r01D9qJOKdtLgXZLjd34NJGu/aNyrk9W6Cqvm7P/AK9ODbxzx9KfMBM9QzHeCB3HpUV3NtPytuqpFrDMrKB3waL6gNn0pc/vGCj0zzUMNlDbzboY1X3P3qfNMZWpVGTUgTGQmkmXC0zfzQzlqAG165+wT4g/4Rb9tL4Z3mcLHrsCH/gR2/1ryQ8jNdD8HvETeEvi/wCFdUUsDY6tazZHYCVc/pWlJ2mvUmWzP6ztBuBPp8Eg6MgP6VqRDBrlPhRqi614C0q6X7s1pG4/FRUvxe+L+i/Az4d6h4k166W2sdPjLn+9K38KKO7E4AHvRUerOmn7yViP4z/GvRfgX4Mn1jWJsKo2wW6EebcydkQdzXxX4v1jSf8AgpDaah4W8d2P9n3Sytc+HtRsowJdGfbjBY8uh43qeG7YIBHivxl/aP139pP4kHxDqTvFaRkx2dgHzFaR54x/tHjJ7/SvfP2PItPW5urqOPddRxbkDfKaz9nCpFxnszri50Wpw36M/Pv4rfs7a18EfHWoeG9fsfL1DTZNrNEflnQ/clQ/xIy4IP8AIg1zY8LrvO3zQo7FK/Sr/gpL8IW+JnwTtvGVrbKuveDiFvNoyZrJzyDjrschh6Bnr4HhuI5P9cvQ8/7Ir8xzbDvC4hwW269P+Afp+U4xYvDKr9paP1/4Jy8HhC38re2dwHPy163+zn/wT+8WftNXK3lov9i+GY32zavexlI+OqxL96VvZcAdyK9T/Yn/AGQbb476tJ4i1iGWLwbpUoVxna2rTDnyVPZR/Gw6A4HJ4+5tZvRZaNHb28VvpWn2cIhgt4lEcMMajhVUdOK9rJcldaKr4jSPRd/+B+Z4+d8QewboYf4ur7f8H8j5x8D+APh1/wAE59fs77wzp3/CU+I87NQ1G/w1wkRHzCED5Ys+gyx6E190eB/iHpfxQ8F6frukT/aLDUYBLGw6jI5BHYjoRX51/GvU7e41G6kjBuDuY5B47969G/4JafHiYeIvEXgG9kyqp/amngnhBkLIg/MH8TX2lKnCEOSOlj4itKpV/ezbb63PsrXbkRoRz81fz+/8HAHx3j+MP7eN1otrcefp/gHTYtIAU/Kty376f8QXVT/uV+4v7QPxbsfgr8KPE3i7VJAun+GtNn1GbdxuEaFto92IAHua/lv8f+OtQ+KPjvWvEuqO0upa/fT6jdMTn95K5dvyJx+FFjjnKysZUXytnpViCTa27OG/nUEbVLnIoMTat7vzrX/aX9KLK9K3RXt15rKguntVyp69vWqEt3fahclVX7OrdSOtAHYXXiO1hUJJIqsThQpzk1YgulIz831rj9O0ZbaXc26SXrlucV1FrN8i7hniqjKwrGlFdlT3P1q3b3DMOaylIVu9WYHb5efYZrYg27bU2t264984ruvhF+0H4w+CeuLqXhPxJrXh28ByZbG8eEt/vBThvowIrzESdP1qWO92N975vegNj9L/ANmr/g4O+IXgWWGz+IOlaf450yPCtcxBbHUVHruQeW5/3kBPrX6Afs3/APBV34K/tMvb2th4lXw7rVxhV03XgLORmPZJCTE/sA+T6V/PBbap/tfjWnpurPC4OTtz0zWcqMZeRtGo+p/U4y/KGH3WGQfUetN28V/P9+zL/wAFVfi9+zFBDYaN4om1LQ4WBGl6wv221Uf3U3HfGPZGWvvX9m//AIOCvBXji5tdP+I3h268JXUxCNqOnubuxB9WQ/vEH034rnlh5LbU0U0z9Cmi2mmlTuqr4X8Taf428N2OtaPfWuqaRqcK3FpeW0gkhuY2GQysOCDV5jgVjYoYwxRTSu480VIErvzUZ2s3zUM+Wqn4j1+y8KeHr3VtTuI7PTdLt5Lu7uHOFghjUs7k+gUE1PN2Gfg3/wAHAHxpvvin+3xrGitdO2i+A7K30izhB+RJGjWedsf3i8gBPogHavg+5kMRwuRXq37Y3x2X9pL9pjxz43jRobPxJrFze2sb/eSFnPlg++wLmvIL2fnqOldkFaNjKpK8tCldTmPWl+bG9Mn3xUk0+VrNv5tl7Cx9SPzqw0mVq0Zjt+6nFPL5qHeajkO4E4+71pASPLluKkWQjHzN71XQ8VMDkUAE7blYVlrN5OpbT91uh9xWoBmsnVf3cokX+E5+tEn1AvMu47j3HSlK4pbeUXEat0LDNOoAYrbT29ORmlI2DFIwwe/40KTn/GgBSAEpqytbTxyr96Nwyn0IOak3YSk3rKPUH0pxdncNz+pf9hnxmvjX9krwLrTSApd6NbzFyen7sZzXxf8A8FB/2g7z9oj4j/2PYysvhfQZStsgPy3coyGmPqByF9snvXH/ALJv7d0dh/wTU+F3gTR7hpPEmsRzadeyI3NlaxSuhyezMMKPbcewrrbz4Ro8kMjgbSgJCj9K0xH8TQ7MPpBXPMPhjoLQ6vbxTIWjkcLyOM54r7C+D/w/l8M6ktz5Y2zJyuMYryKx+HUkssItbf8A1bB1IHGQcivqnTYWOkWNxtCrJGu764rCxs5N6GpDpVnq2i6jp1/G1xp+rW7W00RHVHUqwP4Gvzl8F/sQ654y/aa8Q+A3uGs7Lw9m5ubvbuM1oWHlMg6FnVlxngc56Yr9LrCzVvlI98ntVHTfhlpvh3xlqniCzhCanrVvBbXMg6ukJcr/AOhn/vkelcOOy2niZU51FpH8V2+89LLs1q4SNSNP7S+59/uv+BjeEfBa+EPDen6PpOm/2Xo2kwi3tLaNh8gHUk/xMTkljySSa5/4safcQ+HJFYHdIwBbeScd/SvUfs8sqHczKAOnrXNeLdMXUrWSOQKqqhNd3SyPN3d2fHHxM05beJlX5lYHNcz+yTcyeG/2wfCd3AAFuJZbSTJ4KvG2f1xXo3jTR1v7u4h2llZmAP41zfwU8JtpH7RnhSVhjy79TnHByCKmHxGkp/u7EH/BxP8AtHD4b/shWPgm0ufL1L4iaikMiofm+x25Esv4F/KX8TX4eqWAxnpX2P8A8F2v2iG+OX7eeq6Ra3CzaT4Atk0O3Cn5fP8A9ZcN9d7bf+2dfHIXYMfjWh5tTew5Dg1InXdUca5p00vlBcKzc9qDMsJLn5aktiq8Hn0zRpel3Gs3MMNrBNc3EzbY4okMjufQKOSfYV0HxB+Evif4Qanbaf4p8P6x4dvLu3W7gg1G1e3klhYkLIAwB2kgj8Kh1IKXI2rvp1KUZW5raGXbR7RuB3H0x0q9C/T2OayXv/7OtmbPzdAPWr2ku0lsrMclua1iyS8r5OasB+eKrmgy4q2Si49wT0pqy4NVRdYbHWhp8n5crVokvQXXlv3Oa0YLsmNWzurCExNWre5Ix3xVbhc3f7SZF/8Ar0uk6m15PvkLeTG2MK2N5/wFYGoXkm1YYzteY7R7e9aMMotoI40ztjGBnrVREfSn7Hf7f/j39kv4i6bqWhaxfTaTbyKLrRZ7h2sL2Etl4zHnapOSQygEMc+uf6B/hX8TdL+NHww0Hxboknm6T4isYr62J6qrjO0/7SnKkeoNfy7aXcMCp3NgYP61+7n/AAQh+JbeOf2D4NNmkLzeFdcvNOAJ5WN9k6D6fvWx9K5cRBW5jelJ7H2Tz7UU/bmiuOzNiPaWxX5x/wDBw7+2+3wg+Clh8IdCu/K1zx9F9o1ho3/eW2mI+PLPp58ilf8AcjcfxV+jsl1DY20k1xIsNvChkkkY4WNQCSx9gATX8yv/AAUE/aRuP2s/2ufHHjyaR2sdQv2t9LRj/qrKL93Ao/4AoYj1Zj3p043ZXNaLkeGaxe43IMjvWPLJu9fr61av33uxqoXw1dWhymdrAGyOT+644qbd5+36dRUeuKWgb/ZwaIWPlr9AaQEzDC1HTyd8WKRVzQA4cnPT2FSN8wxTFXPWn4zQCA1Q1OLEPPXFaLLtFVbmPcPmoAraNcbrXyzndGdv+FX8Nmsiyka01ZlP3ZOn1Fbe7e3YH6UdBX1sV3HNCHmpJF5x7VG3yrQMUkJ60xBg0Y4p6cpt96APtP8A4Jrzx3vw+eU7Wn0bWgAB1CSKrfzDV+smo+BynhvSb4xx+XdQrk+hr8i/+CRUEPiDxT460WaZkePTodShTj52jkKnH/fwV+03wYMPjn4DaW03zeSoVueRT5X1OiM/dVin4V8NQrGn7tWHbFd5plj53hW4iVcG3OV9dtaHhPw9Z2NlGscKkx8ZbmtS2tFtb7btUxyjaR9acY6Gylcx9IuZL7TFkj5ZPlcH2rrrC3/4lUO5R9zPPbPNcfoOdF1/ULNvlDYkj9xXZJwgX+FRirkna7JctdDNmDRll247Cub8WWhkaQD5TIoBI+ldzNp8TrueTa2OBmuW8X2bLcbUO7djFZcuupSkr2R88+Lfh7JZ3bFSNm7865rxZqNj8FvDd9421Bo4bfwpaTarIzHhvJjZwv4kAfjXv+t/D1r2He0q+ZnOCOK+G/8Aguj41b4N/sYf2GtxGt9461KLTo41PzGCP99M2PT5UX/gdQDmkfjf4y8WXnj3xdqmvajI0uoa1eTX1y5P3pJXLsfzY1m1IANmPTpUbDBqzhHj7tRy30loyMu3KsDyMg/WpYgStNns/PX6UB1uf0Gf8EnNc+Dfxt/ZC0fxp4D8E+EfCHiC3UWWrxWFmqzW99GoEqF2DP8ANxIpY8q45zXG/wDBYX9hbUP2uP2fJtZ0jTJJvGXgGOTU7V1Uu95a4zNbZ7Egb1GT86Acbia/In9jT9vf4kfsIjxZD4Fn02S38YW0cVzb6jA00EEqNlLhEDD94FLLzkENyDgVn/HX9ur4yftDalHqHjT4jeJNRkjh+zQ2trcfYbVEPBXyYNiHIOCSCSOpNfmr4RzBZssZRqKMYu6bu209bNf+St3TsfWf21hXg3QnBtyWq6K3Vfn6nlssn27UNn/LOPj6mt6xk2xKo/hGKw9LtvIVW75ya1oGZV+Wv0xK58lzFz7RzQZs9qriXApjNzikMsmXC/jThKFFQI9PrTmJsSxy4H0qczeUKoJKQeaj1O/+zWbEYyeAB3qyeho6Vc/aL6WY/MI8ov8AWtRJSXFY+lhbbT44x97HzH1Per0cikZNAG5o8u2bHrX6wf8ABt/8Y7W31P4keA7i4Vbq++z63YxE48zywYpsepAaI/QH0r8j7C8xMvQgEZr3v9hX9oq4/Zn/AGpfCfi+GRlh02/jN4itgTWr/u50PrmNm/EClKN1Y0puzP6RmOTRTLfUodQtori3kWa3nRZIpF5EiMMqw9iCDRXmHQfL/wDwWR/aEb9nz9g/xQ1nceRrXi/b4e0/a2H/AH+fOYd/lgEnPYkV/Ol4nulSYxxsNi8nHr3r9Mv+Di/9qKPxZ8ddG8BWNx5lv4Js2a4RW+UXtxhnz7pEIx9Wavy1vp/MQ5ropbXFW0tFFSdy7mq78P8AWlkbDGoJJPmrQ51cg1lsWzD/AGaSxffAlF6fOhYVFpJ3W6igZbY05GwoppGG+vSpQAcemabARBUiDinAYozxSAGNQzqXGfSpGfzDTGbFAGNrCbXWZc7kIbitK0u/NVWGPmGar6hF5oOD0GMVHos2xXX+JT37ii4GiwJqIHBqQzApt9+ajzQAU6Pkn68U3NPXpQB9Ff8ABLfxofBn7ZPh6Fm2w+IILjSpB6mSMlP/AB9Vr9xf2KNQ+2+CNT0mTlrWVwq+mDX89f7Nfi7/AIQX9oXwPrBYKun63aSvnptEy5/TNfvp+yXqn9h/GPVtPZtsd18yjPXPFW3dKxtTWjPoDQJvKnKY+8M/StW/j3Ird1NY7Rmy1dl6FWI5rZUl1Kn+Krpl81itc6bHd+I7SYg7mAHB61uz+XbRs3X0UetZ+m2/2i5ibPzR5IP4Yq6NMubmciGOS58vDFUGSv1oqPWwRWt2MstN+1SCaZm+bovpWTrzKuryccRsAAfoK6ixuXRF8v1x+Nef+NfEDLrkpxhmY5FZSi1qVe5cuvmG6vw9/wCDgz48v8S/2zbfwlbzGTTvh9pkdqUB+UXVwBNMfqFMS/8AAa/a7xR4vs/BfgPUvEGqSLDp+jWU1/duxwEiiQux/JTX8xvx4+K998cvjJ4o8YakzNeeJtUuNRlDc7PMcsF+iqQo9hSMpStGxyJOTSgcfypM0FQ3rxQYkkRYnb/kVIDVcHBqVG555NAD85NUw327UupKR9OOpp+p3jW8O1fvvwPan6XB9nTHtyaAL8ICrxn8anR9q1EoxRvBoJ5exKSSfalD4qNGx1pXFBRMrelPSTn68VAj05G29f0oAnk4NZmoy/aNShh427tx98Vckl2rmsmxlN1rDt1CcA56VXMB0sEwTbt/WpVlZxhR371RiIP/AAHgVoWzKg+Y8+lbGY+NWtJFI6E5z6VuaXfsl9Gfl4AP1rNjuFlTHHqKlgG+ZT/dNVza3A/pP/4Jl/Fb/heH7Cfw21uR3nuotJXTbps5Pm2zNAc+5EYP40V4h/wb4eJ5p/2AGgZSy2Xia+hTnoCkD4/NzRXFVpvndjri9D8Lfjb8VdU+NfxK1vxRrl1JdaprV3LeXMhP35JGLMfpk8DsK4W561dv3+Ztp71QlOetWtNDGUm3dlWYfNUEiYNWZCB1qvM3PHSgRXlGVyKi0cZib/ZJFTTfd+lV9FbMUnruP86BIvYwKlQ4Wo4zvH0qRCKBkhYA9e9Nd+PloYYNH3jQCGnrQW3L/SmMcZFJv2mgCOVcbvfrWaW+zXoZeBJ8ua05PmqhqcOYxt/A+9AF5fu89aKr2dy1xArfgasAhjQAVIr8imqu/wClL8oPXtQBPbTNbXMcsbYeNgyn0I5r97v2dPGq3fiHwD4mR90ev6VbTFv7zPEjH+Zr8DY2wPfrX7LfsDeMf+Ev/Ye+GetK26bQwbCY5yR5MzIP/HNtaRvb5mtHex+j3iS38vVfMH/LRQ4/GrlmwKK38JHWqN3crrPhTSr5WyHgAJ9aXS7r9woz7UU3qWa+nt5VzJx93P6kVr6F4jjFxLbtLaWrMTIHuCUEnyldoOQOPT8ay9KiZppMrnIX/P6VfSCMHmNW5zg1pUp8ysF9LGbr/iOO21C5dLqORZHZt+fvDAGf069+teXjVX8RarJKCG8yTIP4161rlpZ3dpMslpCu5Dn5B6YzXk/w0treNpIThmg+Xr1wcVnKNkkB8u/8F2f2in+B/wCwjP4es7jydW+It0ujKVOGFso8y5I9iqqh/wCutfg/uyK/QL/g4g+Ph+In7XWk+DbO43af4B0tY5I1b5RdXOJZD9RH5I/A1+fokBNZmdTewwYBp45pr/e96E6UGY9TgfjT8rtzmoxyaqardZCwJ1k4z6UAOgU6jcmRh+7Tha0om2D2xVbTrfyIFjqxjFAE3n7vSgNzzUAOHqVTuPOaAJA/FLv5pijn2pZTh6AHxmpEPzN6dqhWX5aVn+WgBNRuvItmO7HFUPDpzD5mBliSTUXiK4KWZ+b5jwKtaXH5cK46YHFAGhJe+X0U5qe3mkkOcmoEVSM4+bpV2AheM/lVAT2aOArfzrWsZMJ2yKzRcqFH3uPSpLab58itI7EyPvP/AIJ/f8FSvFH7GPwIk8J6T4d07VrO51ObUhLOxVlZ0iQrx2/d5/Givkfw9qZt9IhX5emSPSilz90acx5dctvz+RqvcD5alnLA1VlfccVnckgmOaiY4FTTLtNV5OB+FICG4kx0qppBzu9mP86sT8A1T0d+G5/iOaXUDWTAHrUivUKvkU9WzTAlMm6myPg8dKaDuPWmv1oAPMNDnNIvWkoAbJ0qO8hXyzj0p2c02Q5FAFOwk8m9kjJ+VhkA1orzWZqMbQyhlxlD+daFtOJYV+7yKSAlDYFI2KU8GmMfnpgnclj5FfqV/wAETvEzeMP2VfG3hpm3Po2q+fED2WeEY/8AHojX5aLNlVHGF9q+9v8Aggv4+Gn/ABq8a+GpJPk1rRVu40z96SCQDj32yt+VVHZoqHxI/Z74F65/wlHwK02Rjuktx5bZ6jFatlc+TJtz36Vwn7JF+f8AhG/EGjsc/Y7h9o9jyP6V115KbW7Uj5fSjm1ujpcUlqdtoL+buPbYvP4mtKJlEvPrWT4Sk81JDnPyLj35NaFxL5RZs49K6U7mRS1/V44DMrSLjYePavn7wv44tfDmsazfXU6w2Vn588zscKka5difYAGvVvFdwZWuv4i0ZUGvz7/4KW/Gpvgh+yR46a3mMGpa850K2IOGzOxWQj6RCSsKjvuV1PyP/aO+Ll18evjv4w8Z3e7zvEurXF+AT9xHc7F/4Cm0fhXC7wKkfIHXNQ7cuazMG7u5IrbvrS5KmkxtXjrTQzdW9eaBBcXRt4mbgcdap6aPPmMr8nsD2qHULr7bdCEY2KQW96vQlY1Cqoqb62AuQPtNSTP83pVWO48sdvSmtKxeqAuRnJpwbNVRIyj0+tKtyVH3l/GgC2s+ygy/LVZpM0iloeSwY59KALLS4P8AjSmYH6VVN+kh+6VoMwVOp60AUdck867hj/2q0rKTbCorBubj7RrS8/dUmtaK5CR4x07in0F1NOO52tTxfYbGfmrNSWQn5TU0SMX54p27jNSC7aX5S3vV63uVUDJ/Gsq0XZ8zHtxT7i8yflOPwouwO80PVoRpyhpApB9aK4SO+lRcUUWAS4l4PWqpOc9j2qSRtxpm2pAYzZ61G6K39BUwTDZqG8faC3egDO1mRYoyFboKztCl3buf4zUmtT5RiW7VQ8PzbpH54LVLA6OJwvX0qTdzwarxnC5NTJ0qgHdBRuyPal+6aSgB8fyrk00/OelLn931703GDQA1xio23M3SpnWo84PvQBVuk3RY/KmaJMEDx4+ZTx9KszpuThao7TazrIMD1rPrcDWB3LnvTZR7dqahLgbe/pUhP7uqb7AMU4Ne8/8ABNr4q/8ACof2z/AupM+22u78aZcc4BjuAYjn6FgfwrwZa1/BWuN4b8WaXqEbFHsbyK4UjsUcMP5VpHcD+kL9na//ALE+NGqWbcLfQhz7kZH9K9I8UxG2vWXoytXhvgDxKo+KPhvVIm/capAHDZ4YOquP0Ne7fEGMjUldekgDcVntodm+x0XgC4M9q/8A1zXn8TVzXbwW1u+7NYnwvn/cXa5+ZVXv7mpPGOofOE/u9c966OZ7GRgXdws943LfMp6V+Lv/AAXf+K/2r40ad4It5D5WlyS6pcoG6SSfLHn6KGP/AAKv2S1G8W28x9wUJGWLE9ABX85H7b/xkX47/tW+OPE0cjy2l9qckdoWOf3EZ8uP81UH8amoRzaHlG7CnvUe7BpWfNRu/PFZmZL5vtVfUr7yoMd24HvTml2DJPSseKX+1NQLZ+SP7vNJgW9OsfK+dyWZuTV0OoX7opo6/hTgvFLlW4DlbcKUtgUscWT+FOEeW20k7AII9/tSiD6flUibdv40MdlOMgFWBgPSnqqsMtnHSmG52r1/WmTXWItvv2NNsCGcrHc8Gjzuv0qs5aSbdz0pZW2xc88UuZAZti3m63Nj+HityBNwrndDm33szdWZq6KKYBfpRF3QF6JFVR09OlSJiqcdzv8Au81YR9wVu3etNGwLEtxtTaO/SnWkXmuueeOnrVdf3j5/Srdq2JB7d6OURZ/s8HtRUyXHy9F/GilYZnhMj0pPuGp0h2rn+lRzrgZpAV5peDiqN6+4MKsXMuGqjdT5b/69AGB4imwdveovDJ/fMD61HrMu+/8AZf1p3h05uJP97io6gdHEcj1qdWzVWFsipm+uKpgTeZS7hUKtz608DNK4EjHauajilyeuefyomO1T82cc1DHJu9qduoFiSTdUPmZapA4Wo4j83K0S2AczZPXiqdyNwP0xVrdhqhK5HrSVuoD9NkZ4MbvmQ4IFW3kATkVlwyG2ut3OH4+lX2bentRHUBGl+bgVNF9fxqvT4nxVAfun+yp8Q/8AhLv2cfhD4g3lmbS7SJ2PPzInlNn8Ur7U8YTLeaHYXWR+8jAyO9fl/wD8EvPH6+KP2EdFt9ytceGdWns2weVXzBKv6SV+lmj3n9u/CO0n+80SA/0oluzqjLRM1vhXcbb/AFBf+mCMOf8AaNJ4uu2k1RVyMN2rK+FtyZdcvl3f8uq9T/t034g6vHp+vR28P+s8veznsOnA7mqUuVpks8N/4KV/HFv2df2LvHXiOFvJvptPOmWL5wwuLn9yhHuu4t/wGv53izNI2Sx56mv1c/4ONvj5FH4X8A/DqxlmK3U0mu3iswJZY1MMW7bx95pT/wABr8oS/P1olK7MZW2Qj02pHPy1VvbpbSBnY4C1JJl+K9TaC28uNvmkwGPoKTQ9sUK9KzlZtQujI3zfrit3T02Q9O/pWe7AsrL7MffFSB2UD5fzNIr5XpS9VoAlSViPvbaXzGznd+QqFRx1pwOB1o8gJMkf3mofaV6frUYkx/8ArokmH+TQALLg0yQ7j96k3VGTg9aAJOAKr30u23Y/3RnFSbs1R1h/KtXO7+E96GBn+HGLSs3qetdChJXvXOeGpMp6dOa6KJsrVRAtQjy/arCP+VU0k3f/AK6kF0E4YmqA04toHUVKHCHr+VZYv/lyP54qaKYv/wDrquYDQW5yOlFQwthPWijmA0ppVSNi3PYVl3FznPrVi8uAQQKoSncakBkrZU/SqF020NV2UfJWbqL/ACNQBzt6266fPPNTeGm/ev8A73FVL1/3rfWrHhtv3pFZ7gdHE22rDPuX7tU4TVqI4J71fQB6deKfmod+1vlNPEgA/rmkA8nI/n71AvyP61KTu/2ah65o1AUtml3bh6VG5oByf6VOoEzrz1qJeKk2/L96mYqvMCpeE7eOoGRVuyuvtNqCSPQ1XmGR+FVrKX7NdlGztbocVN7AaZfFKkmDUXmZPtTomw2au4H35/wRo8fM3g/4jeGZHx5ZttViB/GNz/6BX7Bfs/aoviL4LeXu+YQnoc4IFfgv/wAEsPHv/CL/ALT32B22x+INKubMj1ZVEq/rHX7d/sO+Ihe+D5LZm3YBXrmnLe5tTelmdZ8PdQNv4quBn71mSRn0df8AGs74vaPc+JL6Ly5I4z0XIz9Kh8MXXkfEyS3fg+ROgH+66Vg/tffFq3+A3wF8YeNJ3UL4f0ua5hB/im27YlH1kZR+NVFX3KZ+If8AwVa+Msvxg/bZ8VMJLeS18Nsmg2/kZ8si3G2QjJPWUyHPevnON+fmFTapqk2t6lcXl1K09zdSvNLIxyzuxLMSfckmoaiyRziySD8K5rxBqf2y48tfuJ1wetaev6mLOHav324FYMC73z78+9ZSkwLdhCIk6+9bFqu1RWfbx5UVpKuFWqiBYjofpUaHBpzNmh2uA4LkUhXAphm2/wD66QXG6lqA8nFMY57UrtxULuafNoBJmmseaZv5oDZNT5gBfFZ3iCTZYyf7pq6ZNhrI8SvssW59qbAg8Py7YOeuK6O2kygwa4/T9QWCNR39a07fxCsbLg9KfMgOlU7T0py27TH396y7PxXFnmtGDxJCecrj6VoBZgsGBG5uPSr1vacf3R3J71nprcMvcc+9aWnXcd0MK3J96AHLeLANqgUVI+l4brRQBDO2XqKRsDin4Mhprpg80AQzviPHrWPqEuIm/KtS+bajVi6pLmJqmQGDenLN9aseG/8AXHnv1qnOc7queHP9e1Z+QHRRcip0PFQW/wB2plXitOgDlwD0pue/6U6hh5YouBJFgH5gx698fSoVOU981MWzUJ+Vm+tJSAd3poGG9aC2aTcQKm4Eh4PrSuuV4qMHcacTxT3Ahl+7WdqSlVVueOavy8VTvv3sZHp+tLbQCzp9wLm1Vvz9qnD4asXQ7ryLlrc9G6VtBfmxWiA7j9nLxp/wr/47eEdX3FFs9UgMhB/gZgrf+Ok1+8H7CHidYtQvLbd912IH1r+epJmgkWRfvRMGB9xX7a/8E5viSviMaZqCybhqmnQXJIPG4oN365q7aXKTPp5tRS0+N+1udxuFAz2ZQ3/stfEn/Bw3+0RH4c+CHhX4c2M2278VXv8Aad+qnkWtvjYD/vSsD/2zr658UXxtPjvpPyk/aQ+AO/7pxX4v/wDBWP4+/wDDQX7bniq5gmMml+GyugWQ3blC2+VkI+spkP5UOWhpKSsfNyjj61FeXa2UDMxxgVMSAK5vxLqn2uTylPyr1rGZiZ91dvqF40jE4zwPQVbto8DNVbSDdIPzNaMcewVO24Fi0H3fqKvJVa3TBq3EMCqv1Adu20jS8f8A16SQ4HWoieOtACyPkU2GTe7e1B5FMiO12/nS3Asl81GW7U1ptuBTVPzUtgHdDTWkwetNZ+KjeX5fx9ad+4Cu+axvErb7b+laTye9Y3iO8VIPxovcClY2LSscAsPar0ek7D8wb86r6JqSxHnB9cVvWd9HdHHGfQ1StYCiukKp6N+VSR6JJwVLccCthYlQ5/nSPcx2w5+tLzAp2+lSDG5u9aunltN/iye3NZMuusTiOM/lUL3F3Nz09DinfoB2lr4kxCNzLn3orif9K/2z9KKeoHoUcOENRTgBT9KvTwiIdunPNZl9Py3oPeqAz9SfC9axb+TIYda0r2TJ/Csm/baCQKmQGPKvLfWrmgo3m8NSabpU+tX8drbxSXFxM4SONFLNIzHAUAdSScAV77+3B+x/L+xH8SvCPgrUmk/4SeTwhYaz4giY8Wl7dNNL5A/65w+Sp/2g1S77gle55HAcjHtVoVXhGKsAHFPfcAHJob5utAZg3ehjSABTCMyN9aczYpmclvrQAu3nrSZoqMNxip3AlRuaeDkVCDg4p+41XmgIpflU96ozvg5q7PwrVQmGfpR6gZtxuiud6fwkEV0FjdfardJM/Mw5HvWDdqwOateG7zErQt/Fyv1ojuBtEfK1fpz/AMEi/iI1z4N8NxyP81r5tmeecK5Kj8mFfmO5wtfZf/BKL4gf2Re3FkzYa01JJRk9pEA/9kP51tG9rB11P0S/bo+NS/AbwfJ42Vjv0WzmeAA8tK0bLGPxdlr8K7i4m1S7muLiRpbi4kaSR25Z2Y5JJ9SSTX6T/wDBc/4zJB8OfBvg+3m3XWtzNqN0gPIgiwEBHvI2f+AV+Z+pXa6ba7mbkjAxWMnqBneItSNpD5a/6xu3tXOhdxqe4le7mZ25LGkjiy1FwJrKLC5/yatQrmooYyBVqBMjpSXmBZhHAqbdgVHGdqjinMTQAOQ3eos7h6Ur9KbnimwFDUiYLNxShc00HYzUgFd+ajMn40135qPzdtLrcB7SnNQPJ70NJzUcjYqgCWXC1zviafPy57+tbU82EPpXNa9N5k3rzU7AM092LcevOK3tIt/3wbPGR3rH0HT5JSXb5Y8ZrWlvkh+VNuFokBu/bs8ZqeCxWZgzHI9K5NtVb+GrWm6hfXZ2QrI2PTpTWwHUizhiPCj6ZqxCYVX+EfhXMSWmpF+Rz7uKI9O1Bz83A7nNF+4HWb4x0MdFc2mi3si9W/OinzID0q++4fwrDuOj/Q0UVoBmXfSsy/70UVLA+qP+CF2hWPiL/gqJ8JLfULO1vrf+2DJ5VxCsqbkhkdGwwIyrAMD2IBHNekf8HF7s/wDwVl8bbiW/4lOkDn/ryjooqeq+f6GlP4Z/L8z4nTrVqPoKKKmRmRnrRRRR2AY/3qQdW+tFFV1AKhP36KKUAHp96n0UVYDX5P4VnT9aKKX+QFG761BppxqMf+8P50UUqYHVP1r6A/4JwSsvxN1YBmA3W5wD/tNRRW0dwOr/AOCvl1JP+1np6ySSOsfhu0CBmJC5aUnHpXx34qY+f+dFFc6/UqW5mRdKfB99vrRRVLcksxdauW/SiigCc/dFKPuUUUSAif71JRRUgA602X/WGiimBE/3qgfpRRTiA2oX6UUU5bgQ3P3G+lczqP8ArG+tFFR9kDUb5dO444qihzGfrRRVy3QFjThulrptLPlxLt+X6UUVH2gL8o3R81ULsJ+pooqnuwJBKw/ib86KKKkD/9k="/>
+</div>
+</div>
+</div>
+</section>
+<!-- Career Highlights Section (Updated from Personal Profile Doc) -->
+<section class="py-16 px-4 md:py-20 bg-gray-50 shadow-md" id="highlights">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">Career Highlights</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Highlight 1: Senior Management Experience -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-user-tie"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Senior Management Experience</p>
+<p class="mt-1 text-gray-600">Over 25 years in senior factory management roles including Operations Director, Production Director, R&amp;D Director, and General Manager across diverse industries.</p>
+</div>
+</div>
+<!-- Highlight 2: Industries -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-industry"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Diverse Industry Experience</p>
+<p class="mt-1 text-gray-600">Experience in Tissue &amp; Carton Paper, Jewelry, Indoor/Outdoor Furniture, and Automotive components manufacturing.</p>
+</div>
+</div>
+<!-- Highlight 3: Leadership & People Management -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-users-cog"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Leadership &amp; People Management</p>
+<p class="mt-1 text-gray-600">Responsible for managing teams, employee evaluation, training, and development to improve work efficiency and skills.</p>
+</div>
+</div>
+<!-- Highlight 4: Operations & Production Management -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-cogs"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Operations &amp; Production Management</p>
+<p class="mt-1 text-gray-600">Strong in overseeing entire factory operations, production planning, efficiency control, and meeting output targets and shipment commitments.</p>
+</div>
+</div>
+<!-- Highlight 5: R&D and Technical Expertise -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-flask"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">R&amp;D and Technical Expertise</p>
+<p class="mt-1 text-gray-600">Experienced in product development, prototype creation, technical research, 2D/3D design, and implementing new production technologies.</p>
+</div>
+</div>
+<!-- Highlight 6: Project Management -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-tasks"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Project Management</p>
+<p class="mt-1 text-gray-600">Familiar with factory expansion projects, machinery upgrading, and new factory setups (Greenfield), including Industry 4.0 implementations with ERP/MES/SCADA systems.</p>
+</div>
+</div>
+<!-- Highlight 7: Compliance Management -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-check-circle"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Compliance Management</p>
+<p class="mt-1 text-gray-600">Proficient in implementing and controlling Quality Management Systems (ISO 9001/14001), CSR, BSCI, SMETA, and ESG audits.</p>
+</div>
+</div>
+<!-- Highlight 8: Cost Control & Efficiency -->
+<div class="flex p-6 bg-white rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+<div class="flex-shrink-0 mr-4">
+<span class="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 text-2xl">
+<i class="fas fa-dollar-sign"></i>
+</span>
+</div>
+<div>
+<p class="text-lg font-semibold text-gray-800">Cost Control &amp; Efficiency</p>
+<p class="mt-1 text-gray-600">Demonstrated ability to control costs, improve efficiency, and achieve significant reductions in customer claims and production costs.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Experience Section -->
+<section class="py-16 px-4 md:py-20 bg-white shadow-md" id="experience">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">Professional Experience</h2>
+<!-- PNJ JEWELRY PRODUCTION AND TRADING COMPANY LIMITED (Most recent) -->
+<div class="experience-entry mb-10 p-8 bg-white rounded-xl shadow-lg border-2 border-indigo-200">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-2xl font-bold text-indigo-800">R&amp;D Director</h3>
+<span class="text-lg font-medium text-gray-500">10/2022 - Present</span>
+</div>
+<p class="text-xl text-gray-700 mb-4">PNJ JEWELRY PRODUCTION AND TRADING COMPANY LIMITED (PNJP)</p>
+<div class="bg-indigo-50 p-6 rounded-lg">
+<h4 class="text-lg font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+<ul class="list-disc list-inside text-gray-600 space-y-2">
+<li>Responsible for R&amp;D activities relating to Product development, Prototype, Rubber mould, making strategy plan and road map of Product business in 5 years 2023- 2027 to match with Company Turnover and P&amp;L from Sale Division.</li>
+<li>Manage 4 Divisions of Creative, Design 2D/3D, technology research and development, Sample Mockup and Product test.</li>
+<li>Research the local market in Vietnam and Jewelry fairs in Hong Kong, Thailand, Shenzhen- China and Italy to search the new ideas and cutting- edge technology for new product development.</li>
+<li>Make periodical market survey report to BOD and update Product strategy Plan for new collections launch.</li>
+<li>Set up &amp; write the process of Jewelry production (SOP), BOM, technical data, working instruction and cost of goods (COGs).</li>
+<li>Plan to invest the machinery for the new product development and handover to Production shop floors.</li>
+<li>Organize the presentations by quarterly for new technology and product development introduction NPI with Sale/ Marketing/ Branding/ Production teams and BOD for catch up the trend of products in market and new technique be applied in Jewelry.</li>
+<li>Study the technique of key processes such as Plating, Casting, CNC and chain line machineries for investment Plan and application with new technology in Production matching Product development directions approved from Board of Directors.</li>
+<li>Collaborate with Customer Service and Quality Assurance to give out feedbacks of claims or recommended solutions for customers.</li>
+<li>One of BOD’s members to review and contribute to monthly P&amp;L analysis, then discuss to find down things for improvements.</li>
+</ul>
+</div>
+<button class="generate-insights-btn mt-6 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- VIET MY DONG NAI PRODUCTION AND TRADING JSC -->
+<div class="experience-entry mb-10 p-8 bg-white rounded-xl shadow-lg border-2 border-indigo-200">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-2xl font-bold text-indigo-800">Operation Director</h3>
+<span class="text-lg font-medium text-gray-500">03/2022 - 09/2022</span>
+</div>
+<p class="text-xl text-gray-700 mb-4">VIET MY DONG NAI PRODUCTION AND TRADING JSC</p>
+<div class="bg-indigo-50 p-6 rounded-lg">
+<h4 class="text-lg font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+<ul class="list-disc list-inside text-gray-600 space-y-2">
+<li>Be in charge of overall control for outdoor furniture factory (500 employees) including production, planning, QA/QC, R&amp;D technical and production preparation, maintenance and the implementation of ERP/MES project.</li>
+<li>Work with Production Dept. to track the production schedule and implementation of process, quality and KPIs performance from aluminum extrusion, cutting &amp; bending, welding, grinding, Electrostatic powder coat, weaving and assembly &amp; packing.</li>
+<li>Work with Technical and Production Preparation Dept. to review &amp; approve the R&amp;D development progress, drawings creation and production preparatory works such as welding Jigs, aluminum cutting instructions, Production SOP, BOM.</li>
+<li>Review and approve Prototype and the first of production samples together with Technical, QA/QC, Production team prior to mass production following the process of FMEA implementation to prevent and eliminate the risks in advance.</li>
+<li>Review whole factory layouts and carry out to re- arrange for getting the streamlined workflow in operations and productivity.</li>
+<li>Hold meeting with relevant Departments (R&amp;D /Finance/ Supply Chain/ QA&amp;QC /Production team) to review the ERP/ MES implementation and find down the solutions for the bottle- necks in order to get people in all agreement, then stick to the rules.</li>
+<li>Control Quality activities at Viet My Factory and Contracting Manufacturers (CMs) and build up a strategical Plan to ensure the quality performance implemented in right direction and well- matched with requirements from ScanCom - mainly Client.</li>
+<li>Follow up all audits from CSR, BSCI, SMETA, FSC, Walmart Security, Third party inspection at Factory operations and CMs.</li>
+<li>Prepare Annual Budget (OPEX) Plan and all Capex for facilities investment with adapting to factory Operations.</li>
+</ul>
+</div>
+<button class="generate-insights-btn mt-6 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- RESPONSE - COREONE FURNITURE MANUFACTURING -->
+<div class="experience-entry mb-10 p-8 bg-white rounded-xl shadow-lg border-2 border-indigo-200">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-2xl font-bold text-indigo-800">Operation Manager</h3>
+<span class="text-lg font-medium text-gray-500">01/2017 - 10/2021</span>
+</div>
+<p class="text-xl text-gray-700 mb-4">RESPONSE - COREONE FURNITURE MANUFACTURING</p>
+<div class="bg-indigo-50 p-6 rounded-lg">
+<h4 class="text-lg font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+<ul class="list-disc list-inside text-gray-600 space-y-2">
+<li>Be in charge of overall control for factory activities including production, planning, quality, supply chain, maintenance.</li>
+<li>Work with Supply Chain Manager (SCM) to ensure the outsourcing policy implementation and backup suppliers’ evaluation to adapt with planning and sale strategy (sourcing development and price competition).</li>
+<li>Work together with SCM to deal suppliers for good price of materials and outsourcing for whole yearly operation.</li>
+<li>Check and review new product development about production process, technical issues, all BOMs and pricing calculation to ensure to eliminate the unrealistic gaps between R&amp;D and mass production.</li>
+<li>Ability to deploy New Product Development and review/ approve sample quality with R&amp;D and Production team to record FMEA &amp; risk management into Product summary report for action and improvement plan.</li>
+<li>Work with Planning Manager to make Master Production Plan based on sale volume demands and capabilities of factory facilities. Then carry out Production Plan Control by monthly and weekly plan.</li>
+<li>Work with all manufacturing department Managers in- house production (Response owned factory) to carry out production plan, 5S, LEAN and control efficiency to meet the output targets, commitment of shipment ETD.</li>
+<li>Work with QA/QC Manager to set up and implement the Quality management system matching with Coreone and Customers’ standard requires in whole factory involved in all production teams strictly complying as well.</li>
+<li>Join with Board of Management to build up yearly operation budget in factory including factory facilities budgets, direct materials &amp; consumable cost, labor cost based on Coreone’s business plan.</li>
+<li>Work with maintenance Manager to make CAPEX and plan for machine investment to catch up the sale forecast &amp; strategy whenever required.</li>
+<li>Join with Board of management Response team to review the monthly P&amp;L report.</li>
+<li>Support HR to implement the policy of employees’ evaluation, training, development strategy and CSR &amp; BSCI policy.</li>
+<li>A member of Steering Committee to support all departments to work through the bottle neck issues of ERP and set up running system with Microsoft Dynamic 365 project in 2019.</li>
+</ul>
+</div>
+<button class="generate-insights-btn mt-6 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- SAIGON PAPER CORPORATION -->
+<div class="experience-entry mb-10 p-8 bg-white rounded-xl shadow-lg border-2 border-indigo-200">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-2xl font-bold text-indigo-800">Factory / Production Director</h3>
+<span class="text-lg font-medium text-gray-500">04/2014 - 12/2016</span>
+</div>
+<p class="text-xl text-gray-700 mb-4">SAIGON PAPER CORPORATION</p>
+<div class="bg-indigo-50 p-6 rounded-lg">
+<h4 class="text-lg font-semibold text-gray-800 mb-3">Key Responsibilities:</h4>
+<ul class="list-disc list-inside text-gray-600 space-y-2">
+<li>Be responsible for overall of factory operations including Production, maintenance, warehouse and water treatment Departments.</li>
+<li>Be responsible for production control with effective costing and be sure all parameters under budgets controlling approved by Top management.</li>
+<li>Manage all production activities including two production divisions: Tissue paper (FMCG) and Brown paper (Industrial paper manufacturing).</li>
+<li>Join with sale team in meeting with overseas customers during their factory visit for discussing the required spec of exported products and giving factory operation presentation or setting up a new business relationship.</li>
+<li>Handle projects to upgrade machines and work directly with overseas paper machinery suppliers such as Voith, Andritz, Gapcon, PMP, Kadant, Chanli converting machinery for solving all machine improvement requests and technical support.</li>
+<li>Manage Maintenance team to be sure all production lines running in smoothness and minimize the shutdown time to meet the target of machine capacity request.</li>
+<li>Set up AOP (Annual operating Plan) for factory operations and follow up the production targets by monthly and quarter to meet AOP of Company (targets about output volume and production costing).</li>
+<li>Control products quality and ISO 9001/ 14001 standards compliance.</li>
+<li>Be responsible for encouraging, evaluating and developing people to meet the company policies and goals.</li>
+<li>Be Chief of Kaizen committee to promote all creative activities in Factory.</li>
+<li>5S and Fire prevention and fighting controlling.</li>
+</ul>
+</div>
+<button class="generate-insights-btn mt-6 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- District Eight Design Ltd (older experience) -->
+<div class="experience-entry mb-10 p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">Factory Manager</h3>
+<p class="text-lg text-gray-700">District Eight Design Ltd | 2012 - 2014</p>
+<ul class="list-disc list-inside mt-4 text-gray-600 space-y-2">
+<li>Responsible for all operations of the factory from planning, organization, and deployment of production for both mechanical and wood furniture manufacturing.</li>
+<li>Managed all production departments including iron cast grinding, steel preparation, welding, turning, milling, sand blast processing, and wood production.</li>
+<li>Managed projects to furnish furniture and decorations for offices and apartments.</li>
+<li>Followed up and controlled daily factory operations to ensure effectiveness and meet company targets.</li>
+</ul>
+<button class="generate-insights-btn mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- Design International Ltd. (older experience) -->
+<div class="experience-entry mb-10 p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">R&amp;D Engineering Manager / Production Manager</h3>
+<p class="text-lg text-gray-700">Design International Ltd. | 2006 - 2012</p>
+<ul class="list-disc list-inside mt-4 text-gray-600 space-y-2">
+<li>Set up new machine operations, conducted feasibility studies, and managed production facility investments.</li>
+<li>Applied Laser cutting and small CNC machines for prototypes and production lines using Artcam software.</li>
+<li>Responsible for all production workshop operations and implemented Technical Production Improvement (TPI).</li>
+<li>Set up and implemented production planning based on management targets and capacity.</li>
+</ul>
+<button class="generate-insights-btn mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- THEODORE ALEXANDER Company (older experience) -->
+<div class="experience-entry mb-10 p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">Manufacturing Process &amp; Industrial Engineer / Wood Production Dept Manager</h3>
+<p class="text-lg text-gray-700">THEODORE ALEXANDER Company | 2003 - 2006</p>
+<ul class="list-disc list-inside mt-4 text-gray-600 space-y-2">
+<li>Responsible for setting and auditing manufacturing Standard Operating Procedures (SOP) and working instructions.</li>
+<li>Supported Plant Manager in technical matters and machine upgrades.</li>
+<li>Managed wood production, including panel cutting, veneer pressing, and wood components processing.</li>
+<li>Controlled material withdrawal from raw material warehouse and ensured wastage control.</li>
+</ul>
+<button class="generate-insights-btn mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- MITSUBA Research and Development Asian Center (older experience) -->
+<div class="experience-entry mb-10 p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">Design Engineer - Team Leader</h3>
+<p class="text-lg text-gray-700">MITSUBA Research and Development Asian Center | 2002 - 2003</p>
+<ul class="list-disc list-inside mt-4 text-gray-600 space-y-2">
+<li>Made 2D/3D design drawings using CATIA software.</li>
+<li>Designed automotive components suchs as wipers, seat lifts, and slide door structures.</li>
+<li>Managed and assigned tasks for 3 engineers in the R&amp;D team.</li>
+</ul>
+<button class="generate-insights-btn mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+<!-- New Toyo Tissue Paper Mill (Viet Nam) (older experience) -->
+<div class="experience-entry p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">Production Supervisor</h3>
+<p class="text-lg text-gray-700">New Toyo Tissue Paper Mill (Viet Nam) | 1998 - 2002</p>
+<ul class="list-disc list-inside mt-4 text-gray-600 space-y-2">
+<li>Managed and trained 250 workers for operating production in Toilet Roll and Kitchen Towel lines.</li>
+<li>Implemented company safety policies and maintained housekeeping at the Production Area.</li>
+<li>Prepared daily/monthly production reports for the Production Manager.</li>
+</ul>
+<button class="generate-insights-btn mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors text-sm">Generate Insights ✨</button>
+</div>
+</div>
+</section>
+<!-- Education Section -->
+<section class="py-16 px-4 md:py-20 bg-gray-50 shadow-md" id="education">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">Education</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">Bachelor of Mechanical Engineer</h3>
+<p class="text-lg text-gray-700">HCM Technical University</p>
+<p class="text-md text-gray-500">Ho Chi Minh City, Viet Nam | 08/1998</p>
+</div>
+<div class="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-2xl font-semibold text-indigo-800">High school Graduating Degree</h3>
+<p class="text-lg text-gray-700">LE HONG PHONG High School</p>
+<p class="text-md text-gray-500">Ho Chi Minh City, Viet Nam | 06/1990</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Certifications Section -->
+<section class="py-16 px-4 md:py-20 bg-white shadow-md" id="certifications">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">Certifications</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-xl font-semibold text-indigo-800">MITSUBA R&amp;D Engineering Staff</h3>
+<p class="text-md text-gray-600">MITSUBA R&amp;D Center, Gunma City, Japan</p>
+</div>
+<div class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-xl font-semibold text-indigo-800">QCC and Leadership Training</h3>
+<p class="text-md text-gray-600">THEODORE ALEXANDER Co., Ho Chi Minh City, Viet Nam</p>
+</div>
+<div class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-xl font-semibold text-indigo-800">7 Habits of Highly Effective People</h3>
+<p class="text-md text-gray-600">KranklinCovey, HCM</p>
+</div>
+<div class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-xl font-semibold text-indigo-800">DISC Styles and Motivators Assessment</h3>
+<p class="text-md text-gray-600">Alessandra &amp; Associates, Inc., HCM</p>
+</div>
+<div class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+<h3 class="text-xl font-semibold text-indigo-800">AWARENESS AND INTERNAL AUDIT ISO9001:2015</h3>
+<p class="text-md text-gray-600">KNA CERT, HCM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills Section -->
+<section class="py-16 px-4 md:py-20 bg-gray-50 shadow-md" id="skills">
+<div class="container mx-auto max-w-4xl">
+<h2 class="text-3xl section-title mb-8">Skills</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-2xl font-semibold text-indigo-800 mb-4">Computer Skills</h3>
+<ul class="list-disc list-inside text-lg text-gray-600 space-y-2">
+<li>Microsoft Word, Excel, PowerPoint</li>
+<li>AutoCAD design</li>
+<li>CATIA design for 2D/3D objects (IBM software program)</li>
+<li>ERP Microsoft Dynamic 365</li>
+<li>MES system deployment knowledge</li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-semibold text-indigo-800 mb-4">Languages</h3>
+<ul class="list-disc list-inside text-lg text-gray-600 space-y-2">
+<li>English: C Level, Certificate of HCM Education University</li>
+<li>Japanese: Intermediate level equivalency, Certificate of Gunma City, Japan</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-16 px-4 md:py-20 bg-indigo-700 text-white shadow-md" id="contact">
+<div class="container mx-auto max-w-4xl text-center">
+<h2 class="text-3xl font-bold mb-8 relative inline-block pb-2">
+                    Contact Me
+                    <span class="absolute left-1/2 transform -translate-x-1/2 bottom-0 w-16 h-1 bg-white rounded-full"></span>
+</h2>
+<p class="text-lg md:text-xl mb-8">I'm always open to discussing new opportunities and collaborations. Feel free to reach out!</p>
+<div class="flex flex-wrap justify-center gap-6 text-lg">
+<div class="flex items-center space-x-2">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684L10.5 9.25a1 1 0 001.07 1.07l3.75-1.5a1 1 0 011.07.948V19a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>0903914094</span>
+</div>
+<div class="flex items-center space-x-2">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-3m-2-7l-4.22 2.81a2 2 0 00-.78 1.47V19a2 2 0 01-2 2H5a2 2 0 01-2-2v-7.53a2 2 0 00-.78-1.47L3 8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<a class="hover:underline" href="mailto:npkhoi@gmail.com">npkhoi@gmail.com</a>
+</div>
+<div class="flex items-center space-x-2">
+<svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+<a class="hover:underline" href="https://www.linkedin.com/in/nguyen-phuc-khoi-2b2a99132" target="_blank">LinkedIn Profile</a>
+</div>
+<div class="flex items-center space-x-2">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<a class="hover:underline" href="https://sites.google.com/view/khoinguyenhcm/" target="_blank">Personal Website</a>
+</div>
+</div>
+<p class="text-lg mt-8">
+                    Address: 243/53/23 Ton Dan, Ward 15, District 4, Ho Chi Minh City, Vietnam
+                </p>
+<div class="max-w-4xl mx-auto mt-6">
+<form data-netlify="true" method="POST" name="contact" name="contact" method="POST" data-netlify="true"><input name="form-name" type="hidden" value="contact"/>
+<div style="display: flex; gap: 10px; width:100%; box-sizing:border-box;">
+<div style="flex: 1;">
+<label for="name">Name</label>
+<input id="name" name="name" placeholder="Your name" required="" style="width:100%; height:50px; background:white; color:black; padding:10px; box-sizing:border-box; border:none; border-radius:5px;" type="text"/>
+</div>
+<div style="flex: 1;">
+<label for="email">Email Address</label>
+<input id="email" list="email-suggestions" name="email" placeholder="Your email" required="" style="width:100%; height:50px; background:white; color:black; padding:10px; box-sizing:border-box; border:none; border-radius:5px;" type="email"/>
+<datalist id="email-suggestions">
+<option value="npkhoi@gmail.com"></option>
+</datalist>
+</div>
+</div>
+<label for="message">Message</label>
+<textarea id="message" name="message" placeholder="Your message here" required="" style="width:100%; min-height:400px; background:white; color:black; padding:10px; box-sizing:border-box; border:none; border-radius:5px; resize:vertical;"></textarea>
+<button style="font-weight:bold; color:white; background:transparent; border:none; cursor:pointer;" type="submit">
+        Send Message
+    </button>
+
+    <datalist id="emailsuggestion">
+      <option value="npkhoi@gmail.com"></option>
+    </datalist>
+    
+</form>
+<script>// removed custom email submission script to let Netlify Forms handle submission
+</script>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-6 text-center text-sm">
+<div class="container mx-auto">
+<p>© 2025 NGUYỄN PHÚC KHÔI. All rights reserved.</p>
+</div>
+</footer>
+</main>
+<!-- Insights Modal -->
+<div class="modal" id="insightsModal">
+<div class="modal-content">
+<span class="close-button">×</span>
+<h3 class="text-2xl font-bold text-indigo-800 mb-4" id="modalTitle"></h3>
+<div id="modalContent">
+<div class="loading-spinner"></div>
+<p class="text-center text-gray-600 mt-4">Generating insights...</p>
+</div>
+</div>
+</div>
+<script>// removed custom form submit handler to use Netlify Forms
+</script>
+<script>// removed custom email submission script to let Netlify Forms handle submission
+</script>
+<script>// removed custom email submission script to let Netlify Forms handle submission
+</script>
+</body>
+</html>
